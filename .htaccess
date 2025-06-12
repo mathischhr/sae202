@@ -1,10 +1,4 @@
-RewriteEngine On
+#RewriteEngine On
 
 # Redirige uniquement /gestion (sans slash) vers /admin/index.php
 RewriteRule ^gestion$ /admin/index.php [L]
-
-# Si tu veux exclure /gestion et /agence du routeur MVC :
-RewriteCond %{REQUEST_URI} !^/gestion$
-RewriteCond %{REQUEST_URI} !^/agence
-RewriteCond %{REQUEST_FILENAME} !-d
-RewriteRule ^(.*)$ index.php [L]
