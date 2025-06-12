@@ -23,14 +23,14 @@ if (isset($items[2]) && !empty($items[2])) {
 }
 
 // Inclure le fichier de contrôleur approprié
-$controllerFile =  $GLOBALS['conf_dir'] . $controller . '_controller.php';
+$controllerFile =  $GLOBALS['controller_dir'] . $controller . '_controller.php';
 if (file_exists($controllerFile)) {
     include $controllerFile;
     if (function_exists($action)) {
         call_user_func($action);
     } else {
-        include $GLOBALS['conf_dir']  .  'error_404.php';
+        include $GLOBALS['controller_dir']  .  'error_404.php';
     }
 } else {
-    include $GLOBALS['conf_dir']  .  'error_404.php';
+    include $GLOBALS['controller_dir']  .  'error_404.php';
 }

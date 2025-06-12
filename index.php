@@ -18,6 +18,7 @@ $favicon = "https://mmi24f07.sae202.ovh/agence/wp-content/uploads/2025/06/croppe
 
 $directory = __DIR__ . "/";
 $conf_dir = $directory . 'conf/';
+$controller_dir = $directory . 'controller/';
 $view_dir = $directory . 'view/';
 $model_dir = $directory . 'model/';
 $admin_dir = $directory . 'admin/';
