@@ -10,7 +10,7 @@ $url = trim($url, '/');
 // Diviser l'URL en segments
 $items = explode('/', $url);
 
-var_dump($items); // Pour déboguer, à supprimer en production
+// var_dump($items); // Pour déboguer, à supprimer en production
 
 
 // Obtenir le contrôleur et l'action à partir de l'URL
