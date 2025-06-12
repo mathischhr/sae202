@@ -18,4 +18,4 @@ $favicon = "https://mmi24f07.sae202.ovh/agence/wp-content/uploads/2025/06/croppe
 
 
 
-require_once __DIR__ . '/conf/routeur.php';
+require_once __DIR__ . 'conf/routeur.php';

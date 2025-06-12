@@ -10,6 +10,9 @@ $url = trim($url, '/');
 // Diviser l'URL en segments
 $items = explode('/', $url);
 
+var_dump($items); // Pour déboguer, à supprimer en production
+
+
 // Obtenir le contrôleur et l'action à partir de l'URL
 $controller = !empty($items[0]) ? $items[0] : 'accueil';
 $action = !empty($items[1]) ? $items[1] : 'index';
@@ -20,14 +23,14 @@ if (isset($items[2]) && !empty($items[2])) {
 }
 
 // Inclure le fichier de contrôleur approprié
-$controllerFile = __DIR__ . '/controller/' . $controller . '_controller.php';
+$controllerFile =   '/controller/' . $controller . '_controller.php';
 if (file_exists($controllerFile)) {
     include $controllerFile;
     if (function_exists($action)) {
         call_user_func($action);
     } else {
-        include __DIR__ . '/controller/error_404.php';
+        include  'controller/error_404.php';
     }
 } else {
-    include __DIR__ . '/controller/error_404.php';
+    include 'controller/error_404.php';
 }
