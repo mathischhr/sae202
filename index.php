@@ -16,6 +16,10 @@ $canonicalUrl = 'https://mmi24f07.sae202.ovh';
 $ogImage = 'https://mmi24f07.sae202.ovh/agence/wp-content/uploads/2025/06/e1c4b62ae9f2dcc8bf583d2844c00961bb751246-scaled.png';
 $favicon = "https://mmi24f07.sae202.ovh/agence/wp-content/uploads/2025/06/cropped-Favicon__Ollie.png";
 
+$directory = __DIR__ . "/";
+$conf_dir = $directory . 'conf/';
+$view_dir = $directory . 'view/';
+$model_dir = $directory . 'model/';
+$admin_dir = $directory . 'admin/';
 
-
-require_once __DIR__ . 'conf/routeur.php';
+require_once  $conf_dir . 'routeur.php';
