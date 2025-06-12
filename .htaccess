@@ -1,0 +1,4 @@
+RewriteEngine On
+
+# Redirection de /gestion ou /gestion/ vers /admin/index.php
+RewriteRule ^gestion/?$ /admin/index.php [L]
