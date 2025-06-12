@@ -1,6 +1,8 @@
 <?php
 // mettre la date et l'heure par défaut
 date_default_timezone_set('Europe/Paris');
+
+
 // Démarrer la session
 session_start();
 
