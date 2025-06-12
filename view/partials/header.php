@@ -41,7 +41,7 @@ if (!isset($favicon) && isset($GLOBALS['favicon'])) {
     <meta property="og:image" content="<?= $ogImage; ?>">
     <meta property="og:url" content="<?= $canonicalUrl; ?>">
     <meta property="og:type" content="website">
-    <link rel="stylesheet" href=" <?= $GLOBALS['partials_dir'] . "/css/header.css"; ?> ">
+    <link rel="stylesheet" href="/view/partials//css/header.css">
     <link rel="shortcut icon" href="<?= $favicon; ?>" type="image/x-icon">
 </head>
 
