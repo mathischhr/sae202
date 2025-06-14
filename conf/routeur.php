@@ -29,8 +29,13 @@ if (file_exists($controllerFile)) {
     if (function_exists($action)) {
         call_user_func($action);
     } else {
+
+        $title = 'Erreur 404';
+        $desc = 'L\'action demandée n\'est pas encore implémentée';
         include $GLOBALS['controller_dir']  .  'error_404.php';
     }
 } else {
+    $title = 'Erreur 404';
+    $desc = 'Page non trouvée';
     include $GLOBALS['controller_dir']  .  'error_404.php';
 }
