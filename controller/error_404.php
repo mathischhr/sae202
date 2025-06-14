@@ -55,21 +55,20 @@ if (!isset($favicon) && isset($GLOBALS['favicon'])) {
       <div class="bg-blue-600 p-8 md:p-12 lg:px-16 lg:py-24">
         <div class="mx-auto max-w-xl text-center">
           <h2 class="text-2xl font-bold text-white md:text-3xl">
-            Lorem, ipsum dolor sit amet consectetur adipisicing elit
+            <?= $title; ?>
           </h2>
 
           <p class="hidden text-white/90 sm:mt-4 sm:block">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Et, egestas tempus tellus etiam
-            sed. Quam a scelerisque amet ullamcorper eu enim et fermentum, augue. Aliquet amet
-            volutpat quisque ut interdum tincidunt duis.
+            <?= $site_description; ?>
           </p>
 
           <div class="mt-4 md:mt-8">
             <a
-              href="#"
+              href="/"
+              aria-label="Retour à l'accueil"
               class="inline-block rounded-sm border border-white bg-white px-12 py-3 text-sm font-medium text-blue-500 transition hover:bg-transparent hover:text-white focus:ring-3 focus:ring-yellow-400 focus:outline-hidden"
             >
-              Get Started Today
+             Retour à l'accueil
             </a>
           </div>
         </div>
