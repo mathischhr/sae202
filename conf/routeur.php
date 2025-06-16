@@ -17,9 +17,33 @@ $items = explode('/', $url);
 $controller = !empty($items[0]) ? $items[0] : 'accueil';
 $action = !empty($items[1]) ? $items[1] : 'index';
 
+
+
 // vérifier l'action 2 
 if (isset($items[2]) && !empty($items[2])) {
     $action = $items[2];
+}
+
+if ($controller === 'gestion') {
+    // Authentification gérée par Apache (REMOTE_USER)
+    if (empty($_SERVER['REMOTE_USER'])) {
+        $title = 'Accès refusé';
+        $desc = 'Authentification requise';
+        include $GLOBALS['controller_dir']  .  'error_403.php';
+        exit;
+    }
+
+    $_SESSION['db_user'] = $_SERVER['REMOTE_USER'];
+
+    include $GLOBALS['admin_dir'] . 'index.php';
+    if (function_exists($action)) {
+        call_user_func($action);
+    } else {
+        $title = 'Erreur 404';
+        $desc = 'L\'action demandée n\'est pas encore implémentée';
+        include $GLOBALS['controller_dir']  .  'error_404.php';
+    }
+    exit;
 }
 
 // Inclure le fichier de contrôleur approprié

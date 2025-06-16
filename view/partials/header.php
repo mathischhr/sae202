@@ -55,6 +55,7 @@ if (!isset($favicon) && isset($GLOBALS['favicon'])) {
                 <li><a href="/">Accueil</a></li>
                 <li><a href="/concept">Concept</a></li>
                 <li><a href="/infos-pratiques">Infos pratiques</a></li>
+                <li><a href="/gestion">Accès admin</a></li>
                 <li><a href="/agence" target="_blank">Ollie Agence</a></li>
             </ul>
         </nav>
