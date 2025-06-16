@@ -1,9 +1,4 @@
 RewriteEngine On
 
 # Redirige uniquement /gestion (sans slash) vers /admin/index.php
- RewriteRule ^gestion$ /admin/index.php [L]
-
-# Deuxième règle
-RewriteCond %{REQUEST_FILENAME} !-f
-RewriteCond %{REQUEST_FILENAME} !-d
-RewriteRule ^([^/]+) index.php/$1
+ RewriteRule ^gestion$ /admin/index.php
