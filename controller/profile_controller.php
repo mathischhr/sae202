@@ -26,13 +26,12 @@ function index(): void
         exit;
     }
 
-   // var_dump($userProfile);
+    // var_dump($userProfile);
 
 
     require_once $GLOBALS['partials_dir'] . 'header.php';
     require_once $GLOBALS['view_dir'] . 'profile_view.php';
     require_once $GLOBALS['partials_dir'] . 'footer.php';
-   
 }
 
 
@@ -68,7 +67,7 @@ function update(): void
         'user_id' => $userId,
         'nom' => sanitizeInput($_POST['nom'] ?? ''),
         'prenom' => sanitizeInput($_POST['prenom'] ?? ''),
-        'email' => sanitizeInput($_POST['email'] ?? ''),   
+        'email' => sanitizeInput($_POST['email'] ?? ''),
         'date_naissance' => sanitizeDate($_POST['date_naissance'] ?? ''),
         'tel' => sanitizeInput($_POST['tel'] ?? ''),
         'adresse_rue' => sanitizeInput($_POST['adresse_rue'] ?? ''),
@@ -76,7 +75,7 @@ function update(): void
         'adresse_cp' => sanitizeInput($_POST['adresse_cp'] ?? ''),
     ];
 
-   $response = updateUserProfile($userId, $data);
+    $response = updateUserProfile($userId, $data);
 
     // Vérifier si la mise à jour a réussi
     if ($response['success']) {
@@ -87,4 +86,27 @@ function update(): void
 
     header('Location: /profile');
     exit;
+}
+
+function invitationVerification(): void
+{
+    // Vérifier si l'utilisateur est connecté
+    if (!isset($_SESSION['user'])) {
+        $_SESSION['errorMessage'] = 'Vous devez être connecté pour accéder à cette page.';
+        header('Location: /connexion');
+        exit;
+    }
+
+    $token = $_GET['token'] ?? '';
+    $verif = verifyUserAdminInvitation($token);
+
+    if ($verif['success']) {
+        $_SESSION['successMessage'] = $verif['message'];
+        header('Location: /profile');
+        exit;
+    } else {
+        $_SESSION['errorMessage'] = $verif['message'];
+        header('Location: /profile');
+        exit;
+    }
 }

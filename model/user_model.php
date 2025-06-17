@@ -122,7 +122,7 @@ function create_user(string $username, string $password, string $email, ?string 
 
                 $subject = "Invitation à rejoindre l'équipe d'administration";
                 $message = "Bonjour $username,\n\nVous avez été invité à rejoindre l'équipe d'administration. Veuillez cliquer sur le lien suivant pour accepter l'invitation :\n";
-                $message .= "https://$GLOBALS[siteDomain]/profile/invitation?token=$invitationToken\n\nCordialement,\nL'équipe SAE202";
+                $message .= "https://$GLOBALS[siteDomain]/profile/invitationVerification?token=$invitationToken\n\nCordialement,\nL'équipe SAE202";
                 mail($email, $subject, $message, $headers);
             } else {
                 return ['success' => false, 'message' => 'Erreur lors de la création du token d\'invitation.'];

@@ -32,6 +32,11 @@
                 </div>
             </div>
             <h2>Liens utiles</h2>
+            <?php if (isset($_SESSION['user']) && $_SESSION['user']['role'] === 'admin'): ?>
+                <ul class="profile-links">
+                    <li><a href="/gestion" class="go_to_link">Espace Admin</a></li>
+                </ul>
+            <?php endif; ?>
             <ul class="profile-links">
                 <li><a href="/profile/messagerie" class="go_to_link">Messagerie</a></li>
                 <li><a href="/profile/password_reset" class="go_to_link">Changer de mot de passe</a></li>
