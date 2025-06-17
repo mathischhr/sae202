@@ -20,6 +20,9 @@ if (!isset($_SESSION['user']) && isset($_COOKIE['remember_user_token_sae202'])){
 
     if ($user) {
 
+        var_dump($user);
+        die();
+
         $db_token = $user['token'];
 
         // Vérifier si le token du cookie correspond à celui de la base de données
