@@ -25,6 +25,9 @@ function index(): void
         header('Location: /');
         exit;
     }
+    var_dump($userProfile);
+    die();
+
     // Vérifier si l'utilisateur a un rôle d'admin
     if (isset($userProfile['role']) && $userProfile['role'] === 'admin') {
         $isAdmin = true;
