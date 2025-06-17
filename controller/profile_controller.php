@@ -130,7 +130,7 @@ function invitationVerification(): void
     }
     
     // Récupérer le profil de l'utilisateur
-    $userProfile = getUserProfile($userId);
+    $userProfile = getUserById($userId);
 
     //  Vérifier si le token n'est pas déjà validé
     if (isset($userProfile['valid_admin']) && $userProfile['valid_admin'] === 1) {
