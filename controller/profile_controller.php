@@ -25,8 +25,27 @@ function index(): void
         header('Location: /');
         exit;
     }
+    // Vérifier si l'utilisateur a un rôle d'admin
+    if (isset($userProfile['role']) && $userProfile['role'] === 'admin') {
+        $isAdmin = true;
 
-    // var_dump($userProfile);
+
+        // Vérifier si l'utilisateur a une invitation en attente
+        if($userProfile['valid_admin'] === 0) {
+            $invitationToken = $userProfile['admin_invitation_token'];
+            if ($invitationToken) {
+              
+                // générer l'URL de vérification
+                $verificationUrl = "/profile/invitationVerification?token=" . urlencode($invitationToken);
+                $message = "Vous avez une invitation en attente. Veuillez la valider en cliquant sur le lien suivant : <a href='$verificationUrl'>Valider l'invitation</a>";
+                $_SESSION['errorMessage'] = $message;
+            } 
+        } 
+
+
+    } else {
+        $isAdmin = false;
+    }
 
 
     require_once $GLOBALS['partials_dir'] . 'header.php';
@@ -94,6 +113,25 @@ function invitationVerification(): void
     if (!isset($_SESSION['user'])) {
         $_SESSION['errorMessage'] = 'Vous devez être connecté pour accéder à cette page.';
         header('Location: /connexion');
+        exit;
+    }
+
+    $userId = $_SESSION['user']['id'];
+
+    // Vérifier si l'utilisateur a un rôle d'admin
+    if (!isset($_SESSION['user']['role']) || $_SESSION['user']['role'] !== 'admin') {
+        $_SESSION['errorMessage'] = 'Vous devez être un administrateur pour valider une invitation.';
+        header('Location: /profile');
+        exit;
+    }
+    
+    // Récupérer le profil de l'utilisateur
+    $userProfile = getUserProfile($userId);
+
+    //  Vérifier si le token n'est pas déjà validé
+    if (isset($userProfile['valid_admin']) && $userProfile['valid_admin'] === 1) {
+        $_SESSION['errorMessage'] = 'Vous avez déjà validé cette invitation.';
+        header('Location: /profile');
         exit;
     }
 
