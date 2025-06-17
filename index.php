@@ -16,7 +16,7 @@ if (!isset($_SESSION['user']) && isset($_COOKIE['remember_user_token_sae202'])){
     
     require_once 'model/user_model.php';
 
-    $user = getUserByToken($token);
+    $user = getUserByToken($navigator_token);
 
     if ($user) {
 
