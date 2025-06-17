@@ -39,7 +39,7 @@ function formHandle(): void
         );
 
         if ($response['success']) {
-            $_SESSION['successMessage'] = 'Inscription réussie. Vous devez maintenant vous connecter.';
+            $_SESSION['successMessage'] = $response['message'];
             header('Location: /connexion');
             exit;
         } else {

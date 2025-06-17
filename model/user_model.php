@@ -105,10 +105,25 @@ function create_user(string $username, string $password, string $email, ?string 
 
             // envoyer un email d'invitation à l'utilisateur
             if ($updateStmt->execute()) {
+
+                // Préparer l'email d'invitation
+
+                $headers = [
+                    'From' => $GLOBALS['siteEmail'],
+                    'Reply-To' => '' . $GLOBALS['siteEmail'],
+                    'X-Mailer' => 'PHP/' . phpversion(),
+                    'Content-Type' => 'text/plain; charset=UTF-8',
+                    'Content-Transfer-Encoding' => '8bit',
+                    'MIME-Version' => '1.0',
+                    'X-Priority' => '3', // Normal priority
+                    'X-MSMail-Priority' => 'Normal'
+                ];
+
+
                 $subject = "Invitation à rejoindre l'équipe d'administration";
                 $message = "Bonjour $username,\n\nVous avez été invité à rejoindre l'équipe d'administration. Veuillez cliquer sur le lien suivant pour accepter l'invitation :\n";
                 $message .= "https://$GLOBALS[siteDomain]/profile/invitation?token=$invitationToken\n\nCordialement,\nL'équipe SAE202";
-                mail($email, $subject, $message);
+                mail($email, $subject, $message, $headers);
             } else {
                 return ['success' => false, 'message' => 'Erreur lors de la création du token d\'invitation.'];
             }
