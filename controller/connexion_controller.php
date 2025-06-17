@@ -10,8 +10,8 @@ function index(): void
     $desc = "Veuillez vous connecter pour accéder à l'espace d'administration.";
 
     // Vérifier si l'utilisateur est déjà connecté
-    if (isset($_SESSION['db_user'])) {
-        $_SESSION['errorMessage'] = 'Vous êtes déjà connecté.';
+    if (isset($_SESSION['user'])) {
+        $_SESSION['errorMessage'] = 'Un utilisateur est déjà connecté.';
         header('Location: /');
         exit;
     }
@@ -41,8 +41,8 @@ function formHandle(): void
         if ($response['success']) {
 
             if ($_SERVER['REQUEST_SCHEME'] === 'https') {
-                $cookieName = 'remember_user_token';
-                $expiration = time() + (86400 * 30); // 30 jours
+                $cookieName = 'remember_user_token_sae202';
+                $expiration = time() + (86400 * 10); // 10 jours
                 $path = '/'; // Disponible sur tout le site
                 $domain = $GLOBALS['siteDomain'] ?? ''; // Utiliser le domaine du site si défini
                 $secure = true; // IMPORTANT: N'envoyer le cookie qu'en HTTPS
@@ -59,7 +59,7 @@ function formHandle(): void
                 ]);
             }
 
-            $_SESSION['db_user'] = $username;
+            $_SESSION['user'] = $response['user'];
             $_SESSION['successMessage'] = 'Connexion réussie.';
             header('Location: /', true, 302);
             exit;
@@ -77,7 +77,12 @@ function formHandle(): void
 
 function logout(): void
 {
-    unset($_SESSION['db_user']);
+    global $siteDomain;
+    unset($_SESSION['user']);
+    // Supprimer le cookie de connexion si l'utilisateur a choisi de rester connecté
+    if (isset($_COOKIE['remember_user_token_sae202'])) {
+        setcookie('remember_user_token_sae202', '', time() - 3600, '/', $siteDomain, true, true); // Expire le cookie
+    }
     $_SESSION['successMessage'] = 'Déconnexion réussie.';
     header('Location: /', true, 302);
     exit;

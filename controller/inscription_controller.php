@@ -9,7 +9,7 @@ function index(): void
     $desc = "Inscrivez-vous pour accéder à l'espace d'administration.";
 
     // Vérifier si l'utilisateur est déjà connecté
-    if (isset($_SESSION['db_user'])) {
+    if (isset($_SESSION['user'])) {
         $_SESSION['errorMessage'] = 'Un utilisateur est déjà connecté. Veuillez vous déconnecter avant de vous inscrire.';
         header('Location: /');
         exit;
@@ -58,7 +58,7 @@ function formHandle(): void
 function logout(): void
 {
 
-    unset($_SESSION['db_user']);
+    unset($_SESSION['user']);
     $_SESSION['successMessage'] = 'Déconnexion réussie.';
     header('Location: /', true, 302);
     exit;

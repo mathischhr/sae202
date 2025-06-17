@@ -80,22 +80,24 @@ function login_user(string $username, string $password, bool $remember = true): 
     global $dbInstance;
 
 
-      $user = getUser($username);
+    $user = getUser($username);
 
     //   var_dump($user);
     //   die();
     // Vérifier si l'utilisateur existe dans la base de données
- 
+
     if (!$user) {
         return ['success' => false, 'message' => 'Utilisateur non trouvé.'];
     }
 
 
     // Récupérer le mot de passe haché de l'utilisateur;
-    $hashedPassword =$user['password'];
+    $hashedPassword = $user['password'];
 
     // Vérifier le mot de passe
     if (password_verify($password, $hashedPassword)) {
+
+        unset($user['password']);
 
         $hashedToken = "";
         // Si l'utilisateur a choisi de rester connecté, on peut gérer le cookie
@@ -107,14 +109,13 @@ function login_user(string $username, string $password, bool $remember = true): 
             // Générer un jeton aléatoire sécurisé
             $token = bin2hex(random_bytes(32)); // 64 caractères hexadécimaux
             $hashedToken = password_hash($token, PASSWORD_DEFAULT); // Hasher le jeton pour le stocker en BDD
-            $sql = "INSERT INTO remember_tokens (user_id, token, expires_at) VALUES (:userId, :hashedToken, DATE_ADD(NOW(), INTERVAL 10 DAY))";
-            $stmt = $dbInstance->prepare($sql);
-            $stmt->bindParam(':userId', $userId);
-            $stmt->bindParam(':hashedToken', $hashedToken);
-            $stmt->execute();
+
+            // Enregistrer le jeton dans la base de données
+           createUserToken($userId, $hashedToken);
+            
         }
         // Authentification réussie
-        return ['success' => true, 'message' => 'Authentification réussie.', 'token' => $hashedToken];
+        return ['success' => true, 'message' => 'Authentification réussie.', 'token' => $hashedToken, 'user' => $user];
     } else {
         // Mot de passe incorrect
         return ['success' => false, 'message' => 'Mot de passe incorrect.'];
@@ -137,4 +138,55 @@ function getUser(string $username): ?array
     }
 
     return null; // L'utilisateur n'existe pas
+}
+
+function getUserByToken(string $token): ?array
+{
+    global $dbInstance;
+
+    // Récupérer l'utilisateur par le token le plus récent
+    $query = "SELECT u.* FROM users u
+              JOIN remember_tokens rt ON u.id = rt.user_id
+              WHERE rt.token = :token AND rt.expires_at > NOW()
+              ORDER BY rt.expires_at DESC LIMIT 1";
+
+    $stmt = $dbInstance->prepare($query);
+    $stmt->bindParam(':token', $token);
+    $stmt->execute();
+
+    if ($stmt->rowCount() > 0) {
+        return $stmt->fetch();
+    }
+
+    return null; // Aucun utilisateur trouvé avec ce token
+}
+
+
+function createUserToken(int $userId, string $hashedToken): bool
+{
+    global $dbInstance;
+
+    // Insérer ou mettre à jour le token de l'utilisateur dans la base de données
+    $query = "INSERT INTO remember_tokens (user_id, token, expires_at) VALUES (:userId, :token, DATE_ADD(NOW(), INTERVAL 10 DAY))
+              ON DUPLICATE KEY UPDATE token = :token, expires_at = DATE_ADD(NOW(), INTERVAL 10 DAY)";
+    $stmt = $dbInstance->prepare($query);
+    $stmt->bindParam(':userId', $userId);
+    $stmt->bindParam(':token', $hashedToken);
+
+    return $stmt->execute();
+}
+
+
+
+function updateUserToken(int $userId, string $newHashedToken): bool
+{
+    global $dbInstance;
+
+    // Mettre à jour le token de l'utilisateur dans la base de données
+    $query = "UPDATE remember_tokens SET token = :token, expires_at = DATE_ADD(NOW(), INTERVAL 10 DAY) WHERE user_id = :userId";
+    $stmt = $dbInstance->prepare($query);
+    $stmt->bindParam(':token', $newHashedToken);
+    $stmt->bindParam(':userId', $userId);
+
+    return $stmt->execute();
 }
