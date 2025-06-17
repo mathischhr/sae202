@@ -63,7 +63,7 @@ if (!isset($favicon) && isset($GLOBALS['favicon'])) {
                 <li><a href="/concept">Concept</a></li>
                 <li><a href="/infos-pratiques">Infos pratiques</a></li>
                 <li><a href="/gestion">Accès admin</a></li>
-              <?php if (isset($_SESSION['db_user'])): ?>
+              <?php if (isset($_SESSION['user'])): ?>
                 <li><a href="/connexion/logout">Déconnexion</a></li>
                 <?php else: ?>
                 <li><a href="/inscription">Inscription </a></li>
