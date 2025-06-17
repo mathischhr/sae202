@@ -27,7 +27,7 @@ if (!isset($_SESSION['user']) && isset($_COOKIE['remember_user_token_sae202'])) 
         if ($db_token && hash_equals($db_token, $navigator_token)) {
 
             $_SESSION['user'] = [
-                'id' => $$user['id'],
+                'id' => $user['id'],
                 'username' => $user['username'],
                 'email' => $user['email'],
                 'role' => $user['role']
@@ -41,7 +41,7 @@ if (!isset($_SESSION['user']) && isset($_COOKIE['remember_user_token_sae202'])) 
             updateUserToken($user['id'], $newHashedToken);
 
             // Mettre à jour le cookie avec le nouveau token
-            setcookie('remember_user_token_sae202', $newToken, time() + (86400 * 10), '/', $GLOBALS['siteDomain'], true, true);
+            setcookie('remember_user_token_sae202', $newToken, time() + (86400 * 10), '/', $siteDomain, true, true);
 
 
             $_SESSION['successMessage'] = 'Connexion réussie via le cookie.';
