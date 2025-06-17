@@ -23,13 +23,8 @@ if (!isset($_SESSION['user']) && isset($_COOKIE['remember_user_token_sae202'])) 
 
 
         $db_token = $user['token'];
-        var_dump($db_token);
-        var_dump($navigator_token);
-        // var_dump($user);
-        die();
-        // Vérifier si le token du cookie correspond à celui de la base de données
-
-        if ($db_token && password_verify($navigator_token, $db_token)) {
+        // Vérifier si le token du cookie correspond à celui de la base de données (les deux sont déjà hachés)
+        if ($db_token && hash_equals($db_token, $navigator_token)) {
 
             $_SESSION['user'] = [
                 'id' => $$user['id'],
