@@ -109,7 +109,9 @@ function login_user(string $username, string $password, bool $remember = true): 
             $hashedToken = password_hash($token, PASSWORD_DEFAULT); // Hasher le jeton pour le stocker en BDD
             $sql = "INSERT INTO remember_tokens (user_id, token, expires_at) VALUES (:userId, :hashedToken, DATE_ADD(NOW(), INTERVAL 10 DAY))";
             $stmt = $dbInstance->prepare($sql);
-            $stmt->execute([$userId, $hashedToken]);
+            $stmt->bindParam(':userId', $userId);
+            $stmt->bindParam(':hashedToken', $hashedToken);
+            $stmt->execute();
         }
         // Authentification réussie
         return ['success' => true, 'message' => 'Authentification réussie.', 'token' => $hashedToken];
