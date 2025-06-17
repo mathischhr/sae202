@@ -9,64 +9,55 @@ session_start();
 // setcookie('sae202_id', session_id(), time() + 3600, '/');
 
 //vérifier si le cookie de session existe
-if (!isset($_SESSION['user']) && isset($_COOKIE['remember_user_token_sae202'])){
+if (!isset($_SESSION['user']) && isset($_COOKIE['remember_user_token_sae202'])) {
 
     // Si le cookie existe, on peut essayer de récupérer l'utilisateur
     $navigator_token = $_COOKIE['remember_user_token_sae202'];
-    
+
     require_once 'model/user_model.php';
 
     $user = getUserByToken($navigator_token);
 
     if ($user) {
 
-        // var_dump($user);
-        // die();
+
 
         $db_token = $user['token'];
-
+        var_dump($db_token);
+        var_dump($navigator_token);
+        // var_dump($user);
+        die();
         // Vérifier si le token du cookie correspond à celui de la base de données
 
-        if($db_token && password_verify($navigator_token, $db_token)) {
-            
+        if ($db_token && password_verify($navigator_token, $db_token)) {
+
             $_SESSION['user'] = [
-            'id' => $$user['id'],
-            'username' => $user['username'],
-            'email' => $user['email'],
-            'role' => $user['role']
-        ];
+                'id' => $$user['id'],
+                'username' => $user['username'],
+                'email' => $user['email'],
+                'role' => $user['role']
+            ];
 
-        // générer un nouveau token pour la session
-        $newToken = bin2hex(random_bytes(32));
-        $newHashedToken = password_hash($newToken, PASSWORD_DEFAULT);
+            // générer un nouveau token pour la session
+            $newToken = bin2hex(random_bytes(32));
+            $newHashedToken = password_hash($newToken, PASSWORD_DEFAULT);
 
-        // Mettre à jour le token dans la base de données
-        updateUserToken($user['id'], $newHashedToken);
+            // Mettre à jour le token dans la base de données
+            updateUserToken($user['id'], $newHashedToken);
 
-        // Mettre à jour le cookie avec le nouveau token
-        setcookie('remember_user_token_sae202', $newToken, time() + (86400 * 10), '/', $GLOBALS['siteDomain'], true, true);
-
-
-        $_SESSION['successMessage'] = 'Connexion réussie via le cookie.';
+            // Mettre à jour le cookie avec le nouveau token
+            setcookie('remember_user_token_sae202', $newToken, time() + (86400 * 10), '/', $GLOBALS['siteDomain'], true, true);
 
 
+            $_SESSION['successMessage'] = 'Connexion réussie via le cookie.';
         } else {
             // Si le token ne correspond pas, on supprime le cookie
             setcookie('remember_user_token_sae202', '',  time() - 3600, '/', '', true, true);
         }
-
-      
-      
     } else {
         // Si l'utilisateur n'existe pas, on supprime le cookie
         setcookie('remember_user_token_sae202', '', time() - 3600, '/');
     }
-
-
-
-
-    
-
 }
 
 
