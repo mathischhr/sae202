@@ -41,11 +41,18 @@ if (!isset($favicon) && isset($GLOBALS['favicon'])) {
     <meta property="og:image" content="<?= $ogImage; ?>">
     <meta property="og:url" content="<?= $canonicalUrl; ?>">
     <meta property="og:type" content="website">
+    
+    <link rel="stylesheet" href="view/partials/css/global.css">
     <link rel="stylesheet" href="view/partials/css/header.css">
+    <link rel="stylesheet" href="view/partials/css/main.css">
     <link rel="shortcut icon" href="<?= $favicon; ?>" type="image/x-icon">
+
+
 </head>
 
 <body>
+
+
     <header>
         <div class="logo">
             <a href="/"><img src="<?= $ogImage; ?>" alt="Logo  du site"></a>
@@ -56,7 +63,28 @@ if (!isset($favicon) && isset($GLOBALS['favicon'])) {
                 <li><a href="/concept">Concept</a></li>
                 <li><a href="/infos-pratiques">Infos pratiques</a></li>
                 <li><a href="/gestion">Accès admin</a></li>
+              <?php if (isset($_SESSION['db_user'])): ?>
+                <li><a href="/connexion/logout">Déconnexion</a></li>
+                <?php else: ?>
+                <li><a href="/inscription">Inscription </a></li>
+                <li><a href="/connexion">Connexion</a></li>
+                <?php endif; ?>
                 <li><a href="/agence" target="_blank">Ollie Agence</a></li>
             </ul>
         </nav>
     </header>
+
+    <main class="container">
+        <div class="flash-messages">
+            <?php
+            // Afficher les messages de session
+            if (isset($_SESSION['successMessage'])) {
+                echo '<div class="success-message">' . htmlspecialchars($_SESSION['successMessage']) . '</div>';
+                unset($_SESSION['successMessage']);
+            }
+            if (isset($_SESSION['errorMessage'])) {
+                echo '<div class="error-message">' . htmlspecialchars($_SESSION['errorMessage']) . '</div>';
+                unset($_SESSION['errorMessage']);
+            }
+            ?>
+        </div>

@@ -4,12 +4,14 @@
     $title = 'Accès administration';
     $desc = 'Bienvenue dans l\'espace d\'administration de Disco';
 
-    $connectedUser = isset($_SERVER['REMOTE_USER']) ? $_SESSION['REMOTE_USER'] : null;
+   //include_once "../view/partials/header.php";
+
+    $connectedUser = isset($_SERVER['REMOTE_USER']) ? $_SERVER['REMOTE_USER'] : null;
     
-    foreach ($_SERVER as $key => $value) {
+   /*  foreach ($_SERVER as $key => $value) {
         echo $key . ': ' . $value . "<br>"; // Pour déboguer, à supprimer en production
 
-    }
+    } */
 
     if ($connectedUser) {
         $desc .= '   - Utilisateur connecté : ' . htmlspecialchars($connectedUser);

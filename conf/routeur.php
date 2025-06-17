@@ -28,7 +28,7 @@ if ($controller === 'gestion') {
     // Authentification gérée par Apache (REMOTE_USER)
     if (empty($_SERVER['REMOTE_USER'])) {
         $title = 'Accès refusé';
-        $desc = 'Authentification requise';
+        $desc = 'Authentification requise 2 ';
         include $GLOBALS['controller_dir']  .  'error_403.php';
         exit;
     }
