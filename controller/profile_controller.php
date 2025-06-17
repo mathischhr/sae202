@@ -25,17 +25,18 @@ function index(): void
         header('Location: /');
         exit;
     }
-    var_dump($userProfile);
-    die();
+  
 
+    $user = $_SESSION['user'];
     // Vérifier si l'utilisateur a un rôle d'admin
-    if (isset($userProfile['role']) && $userProfile['role'] === 'admin') {
+    if (isset($user['role']) && $user['role'] === 'admin') {
         $isAdmin = true;
 
+        $user = getUserById($user['id']);
 
         // Vérifier si l'utilisateur a une invitation en attente
-        if($userProfile['valid_admin'] === 0) {
-            $invitationToken = $userProfile['admin_invitation_token'];
+        if($user['valid_admin'] === 0) {
+            $invitationToken = $user['admin_invitation_token'];
             if ($invitationToken) {
               
                 // générer l'URL de vérification
