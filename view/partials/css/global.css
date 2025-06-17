@@ -133,3 +133,26 @@ div[class^="link_to_"] p {
     font-size: 1.2rem;
     color: #343a40;
 }
+
+.form-container .form-control_remember_me{
+    display: flex;
+    align-items: center;
+    flex-direction: row !important;
+    gap: 5px !important;
+}
+
+input[type="checkbox"]{
+    accent-color: #521C0D;
+    width: 25px;
+    height: 35px;
+    cursor: pointer;
+}
+
+input[type="checkbox"] + label {
+    font-size: 1.2rem;
+    cursor: pointer;
+}
+
+input[type="checkbox"] + label:hover {
+    color: #521C0D;
+}

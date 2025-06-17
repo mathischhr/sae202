@@ -12,6 +12,10 @@
             <label for="password">Mot de passe :</label>
             <input type="password" id="password" name="password" required placeholder="*********">
         </div>
+        <div class="form-control_remember_me">
+            <input type="checkbox" id="remember_me" name="remember_me">
+            <label for="remember_me">Se souvenir de moi.</label>
+        </div>
         <div class="form-control_submit">
             <button type="submit">Se connecter</button>
         </div>
