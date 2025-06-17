@@ -81,11 +81,11 @@ if (!isset($favicon) && isset($GLOBALS['favicon'])) {
             <?php
             // Afficher les messages de session
             if (isset($_SESSION['successMessage'])) {
-                echo '<div class="success-message">' . htmlspecialchars($_SESSION['successMessage']) . '</div>';
+                echo '<div class="success-message">' . $_SESSION['successMessage'] . '</div>';
                 unset($_SESSION['successMessage']);
             }
             if (isset($_SESSION['errorMessage'])) {
-                echo '<div class="error-message">' . htmlspecialchars($_SESSION['errorMessage']) . '</div>';
+                echo '<div class="error-message">' . $_SESSION['errorMessage'] . '</div>';
                 unset($_SESSION['errorMessage']);
             }
             ?>
