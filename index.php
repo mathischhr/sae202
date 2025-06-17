@@ -60,6 +60,7 @@ if (!isset($_SESSION['user']) && isset($_COOKIE['remember_user_token_sae202'])) 
 $site_description = "Projet SAE202 2025 à l'IUT de Troyes - Agence Ollie - Esdras Onionkiton, Ethan Mauclair, Matthis Chhour, Mélissa Toumazet, Mohamad Edelbi";
 $description_end = "  -  Agence Ollie , SAE202 2025, IUT de Troyes";
 $siteDomain = 'mmi24f07.sae202.ovh';
+$siteEmail  = 'mmi24f07@mmi-troyes.fr';
 $canonicalUrl = 'https://mmi24f07.sae202.ovh';
 $ogImage = 'https://mmi24f07.sae202.ovh/agence/wp-content/uploads/2025/06/e1c4b62ae9f2dcc8bf583d2844c00961bb751246-scaled.png';
 $favicon = "https://mmi24f07.sae202.ovh/agence/wp-content/uploads/2025/06/cropped-Favicon__Ollie.png";
