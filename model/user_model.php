@@ -2,6 +2,7 @@
 
 
 require_once "conf/conf.inc.php";
+require_once $GLOBALS['model_dir'] . "profile_model.php";
 
 
 function userExists(string $username): bool
@@ -44,11 +45,24 @@ function create_user(string $username, string $password, string $email, ?string 
         $role = 'user';
     }
 
+
+    global $possibleAdminUsers;
+    // vérifier si l'email comence selon un jeu de mots définis dans un array
+    $email = strtolower($email); // Convertir l'email en minuscules pour la comparaison
+    $validEmailPrefixes = $possibleAdminUsers; // Ajouter les préfixes valides ici
+    $emailPrefix = explode('@', $email)[0]; // Extraire le préfixe de l'email
+    if (!in_array($emailPrefix, $validEmailPrefixes)) {
+        $role = 'user'; // Si le préfixe n'est pas valide, attribuer le rôle 'user'
+    } else {
+        $role = 'admin'; // Si le préfixe est valide, attribuer le rôle 'admin'
+    }
+
+
     // Hacher le mot de passe pour le stockage sécurisé
     $hashedPassword = password_hash($password, PASSWORD_BCRYPT);
 
     // Enregistrer l'utilisateur dans la base de données
-    $query = "INSERT INTO users (username, email, password, role) VALUES (:username, :email, :pwd, :role )";
+    $query = "INSERT INTO users (username, email, password, role, valid_admin) VALUES (:username, :email, :pwd, :role, 0 )";
     $stmt = $dbInstance->prepare($query);
     $stmt->bindParam(':username', $username);
     $stmt->bindParam(':email', $email);
@@ -56,8 +70,59 @@ function create_user(string $username, string $password, string $email, ?string 
     $stmt->bindParam(':role', $role);
 
     if ($stmt->execute()) {
-        // L'utilisateur a été créé avec succès
+
+
+        // Si l'utilisateur a été créé avec succès, on peut créer un profil vide
+        $userId = $dbInstance->lastInsertId();
+        $profileData = [
+            'user_id' => $userId,
+            'nom' => '',
+            'prenom' => '',
+            'email' => $email,
+            'date_naissance' => null,
+            'tel' => '',
+            'adresse_rue' => '',
+            'adresse_ville' => '',
+            'adresse_cp' => ''
+        ];
+
+        // Créer le profil de l'utilisateur
+        $profileResponse = createUserProfile($userId, $profileData);
+
+        if (!$profileResponse['success']) {
+            // Si la création du profil échoue, on peut supprimer l'utilisateur
+            deleteUser($userId);
+            return ['success' => false, 'message' => $profileResponse['message']];
+        }
+
+        // si l'email est administratif, on peut créer un token d'invitation
+        if (in_array($emailPrefix, $validEmailPrefixes)) {
+            $invitationToken = bin2hex(random_bytes(16)); 
+            $updateQuery = "UPDATE users SET admin_invitation_token = :token WHERE id = :user_id";
+            $updateStmt = $dbInstance->prepare($updateQuery);
+            $updateStmt->bindParam(':token', $invitationToken);
+            $updateStmt->bindParam(':user_id', $userId);
+
+            // envoyer un email d'invitation à l'utilisateur
+            if ($updateStmt->execute()) {
+                $subject = "Invitation à rejoindre l'équipe d'administration";
+                $message = "Bonjour $username,\n\nVous avez été invité à rejoindre l'équipe d'administration. Veuillez cliquer sur le lien suivant pour accepter l'invitation :\n";
+                $message .= "https://$GLOBALS[siteDomain]/profile/invitation?token=$invitationToken\n\nCordialement,\nL'équipe SAE202";
+                mail($email, $subject, $message);
+            } else {
+                return ['success' => false, 'message' => 'Erreur lors de la création du token d\'invitation.'];
+            }
+
+              // L'utilisateur a été créé avec succès
+        return ['success' => true, 'message' => 'Utilisateur créé avec succès. Un email d\'invitation a été envoyé.'];
+
+
+        }else{
+              // L'utilisateur a été créé avec succès
         return ['success' => true, 'message' => 'Utilisateur créé avec succès.'];
+        }
+
+      
     } else {
         // Une erreur s'est produite lors de la création de l'utilisateur
         return ['success' => false, 'message' => 'Erreur lors de la création de l\'utilisateur.'];
@@ -77,9 +142,7 @@ function create_user(string $username, string $password, string $email, ?string 
  */
 function login_user(string $username, string $password, bool $remember = true): array
 {
-    global $dbInstance;
-
-
+   
     $user = getUser($username);
 
     //   var_dump($user);
@@ -111,8 +174,7 @@ function login_user(string $username, string $password, bool $remember = true): 
             $hashedToken = password_hash($token, PASSWORD_DEFAULT); // Hasher le jeton pour le stocker en BDD
 
             // Enregistrer le jeton dans la base de données
-           createUserToken($userId, $hashedToken);
-            
+            createUserToken($userId, $hashedToken);
         }
         // Authentification réussie
         return ['success' => true, 'message' => 'Authentification réussie.', 'token' => $hashedToken, 'user' => $user];
@@ -120,6 +182,22 @@ function login_user(string $username, string $password, bool $remember = true): 
         // Mot de passe incorrect
         return ['success' => false, 'message' => 'Mot de passe incorrect.'];
     }
+}
+
+function getAdminUsers(): ?array
+{
+    global $dbInstance;
+
+    // Récupérer les utilisateurs avec le rôle 'admin'
+    $query = "SELECT * FROM users WHERE role = 'admin'";
+    $stmt = $dbInstance->prepare($query);
+    $stmt->execute();
+
+    if ($stmt->rowCount() > 0) {
+        return $stmt->fetchAll();
+    }
+
+    return null; // Aucun utilisateur admin trouvé
 }
 
 
@@ -161,6 +239,25 @@ function getUserByToken(string $token): ?array
     return null; // Aucun utilisateur trouvé avec ce token
 }
 
+function getUserById(int $userId): ?array
+{
+    global $dbInstance;
+
+    // Récupérer les informations de l'utilisateur par ID
+    $query = "SELECT * FROM users WHERE id = :userId";
+    $stmt = $dbInstance->prepare($query);
+    $stmt->bindParam(':userId', $userId);
+    $stmt->execute();
+
+    if ($stmt->rowCount() > 0) {
+        $user = $stmt->fetch();
+        unset($user['password']); // Ne pas retourner le mot de passe
+        return $user;
+    }
+
+    return null; // L'utilisateur n'existe pas
+}
+
 
 function createUserToken(int $userId, string $hashedToken): bool
 {
@@ -189,4 +286,105 @@ function updateUserToken(int $userId, string $newHashedToken): bool
     $stmt->bindParam(':userId', $userId);
 
     return $stmt->execute();
+}
+
+
+function getAllUsers(): ?array
+{
+    global $dbInstance;
+
+    // Récupérer tous les utilisateurs de la base de données
+    $query = "SELECT * FROM users";
+    $stmt = $dbInstance->prepare($query);
+    $stmt->execute();
+
+    if ($stmt->rowCount() > 0) {
+        $users = $stmt->fetchAll();
+        foreach ($users as $user) {
+            unset($user['password']);
+        }
+        return $users;
+    }
+    return null; // Aucun utilisateur trouvé
+}
+
+
+function deleteUser(int $userId): bool
+{
+    global $dbInstance;
+
+    try {
+        // Démarrer la transaction
+        $dbInstance->beginTransaction();
+
+        // Supprimer le token de l'utilisateur
+        $query = "DELETE FROM remember_tokens WHERE user_id = :user_id";
+        $stmt = $dbInstance->prepare($query);
+        $stmt->bindParam(':user_id', $userId);
+        $stmt->execute();
+
+        // Supprimer le profil de l'utilisateur
+        $query = "DELETE FROM profiles WHERE user_id = :user_id";
+        $stmt = $dbInstance->prepare($query);
+        $stmt->bindParam(':user_id', $userId);
+        $stmt->execute();
+
+        // Supprimer l'utilisateur de la base de données
+        $query = "DELETE FROM users WHERE id = :user_id";
+        $stmt = $dbInstance->prepare($query);
+        $stmt->bindParam(':user_id', $userId);
+        $stmt->execute();
+
+        // Valider la transaction
+        $dbInstance->commit();
+    } catch (\PDOException $e) {
+        // Annuler la transaction en cas d'erreur
+        $dbInstance->rollBack();
+        return false;
+    }
+
+    return $stmt->execute();
+}
+
+function verifyUserAdminInvitation(string $token): ?array
+{
+    global $dbInstance;
+
+    // Récupérer l'utilisateur par le token d'invitation
+    $query = "SELECT * FROM users WHERE admin_invitation_token = :token";
+    $stmt = $dbInstance->prepare($query);
+    $stmt->bindParam(':token', $token);
+    $stmt->execute();
+    if ($stmt->rowCount() > 0) {
+        $user = $stmt->fetch();
+        // Vérifier si le token est valide
+        if (hash_equals($token, $user['admin_invitation_token'])) {
+
+            // mettre à jour la colonne valid_admin 
+            $updateQuery = "UPDATE users SET valid_admin = 1 WHERE id = :user_id";
+            $updateStmt = $dbInstance->prepare($updateQuery);
+            $updateStmt->bindParam(':user_id', $user['id']);
+            if ($updateStmt->execute()) {
+                return [
+                    'success' => true,
+                    'message' => 'Invitation validée avec succès.',
+                ];
+            }else {
+                return [
+                    'success' => false,
+                    'message' => 'Erreur lors de la validation de l\'invitation.',
+                ];
+            }
+
+        }else {
+            return [
+                'success' => false,
+                'message' => 'Token d\'invitation invalide.',
+            ];
+        }
+    }
+    return [
+        'success' => false,
+        'message' => 'Aucun utilisateur trouvé avec ce token.',
+    ]; // Aucun utilisateur trouvé avec ce token
 }

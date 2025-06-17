@@ -39,7 +39,7 @@ if ($controller === 'gestion') {
     if (function_exists($action)) {
         call_user_func($action);
     } else {
-        $title = 'Erreur 404';
+        $title = 'Erreur 500';
         $desc = 'L\'action demandée n\'est pas encore implémentée';
         include $GLOBALS['controller_dir']  .  'error_404.php';
     }

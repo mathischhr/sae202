@@ -27,7 +27,7 @@ if (!isset($favicon) && isset($GLOBALS['favicon'])) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="<?= $site_description ?>">
     <meta name="author" content="Esdras Onionkiton, Ethan Mauclair, Matthis Chhour, Mélissa Toumazet, Mohamad Edelbi">
-    <meta name="author-url" content="mmi24f07.mmi-troyes.fr, mmi24e12.mmi-troyes.fr">
+    <meta name="author-url" content="mmi24f07.mmi-troyes.fr, mmi24e12.mmi-troyes.fr, mmi24h06.mmi-troyes.fr, mmi24c07.mmi-troyes.fr">
     <meta name="author-email" content="mmi24f07@mmi-troyes.fr, mmi24e12@mmi-troyes.fr, mmi24b09@mmi-troyes.fr, mmi24h06@mmi-troyes.fr, mmi24c07@mmi-troyes.fr">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title><?= $title; ?></title>
@@ -41,10 +41,11 @@ if (!isset($favicon) && isset($GLOBALS['favicon'])) {
     <meta property="og:image" content="<?= $ogImage; ?>">
     <meta property="og:url" content="<?= $canonicalUrl; ?>">
     <meta property="og:type" content="website">
-    
-    <link rel="stylesheet" href="view/partials/css/global.css">
-    <link rel="stylesheet" href="view/partials/css/header.css">
-    <link rel="stylesheet" href="view/partials/css/main.css">
+
+    <link rel="stylesheet" href="/view/partials/css/global.css">
+    <link rel="stylesheet" href="/view/partials/css/header.css">
+    <link rel="stylesheet" href="/view/partials/css/main.css">
+    <link rel="stylesheet" href="/view/partials/css/profile.css">
     <link rel="shortcut icon" href="<?= $favicon; ?>" type="image/x-icon">
 
 
@@ -62,12 +63,13 @@ if (!isset($favicon) && isset($GLOBALS['favicon'])) {
                 <li><a href="/">Accueil</a></li>
                 <li><a href="/concept">Concept</a></li>
                 <li><a href="/infos-pratiques">Infos pratiques</a></li>
-                <li><a href="/gestion">Accès admin</a></li>
-              <?php if (isset($_SESSION['user'])): ?>
-                <li><a href="/connexion/logout">Déconnexion</a></li>
+                <?php if (isset($_SESSION['user'])): ?>
+                    <li><a href="/profile">Mon profile</a></li>
+                    <li><a href="/profile/messagerie">Messagerie</a></li>
+                    <li><a href="/connexion/logout">Déconnexion</a></li>
                 <?php else: ?>
-                <li><a href="/inscription">Inscription </a></li>
-                <li><a href="/connexion">Connexion</a></li>
+                    <li><a href="/inscription">Inscription </a></li>
+                    <li><a href="/connexion">Connexion</a></li>
                 <?php endif; ?>
                 <li><a href="/agence" target="_blank">Ollie Agence</a></li>
             </ul>

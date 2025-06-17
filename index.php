@@ -73,4 +73,12 @@ $view_dir = $directory . 'view/';
 $partials_dir = $view_dir . 'partials/';
 $helpers_dir = $directory . 'helpers/';
 
+$possibleAdminUsers = [
+    'mmi24f07',
+    'mmi24e12',
+    'mmi24h06',
+    'mmi24c07',
+    'mmi24b09'
+];
+
 require_once  $conf_dir . 'routeur.php';

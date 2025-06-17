@@ -6,6 +6,14 @@ body {
     flex-direction: column;
     min-height: 100vh;
 }
+:root {
+    --primary-color: #521C0D;
+    --secondary-color: #f0f0f0;
+    --text-color: #000000;
+    --radius: 8px;
+    --font-family: 'Inter', sans-serif;
+    --super-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
 
 *,
 *::before,
@@ -14,6 +22,22 @@ body {
     transition: all 0.3s ease;
 }
 
+
+h1, h2, h3 {
+    margin: 0;
+    padding: 0;
+    color: #521C0D !important;
+}
+
+ul, ol {
+    list-style: none !important;
+    padding: 0;
+    margin: 0;
+}
+a{
+    text-decoration: none;
+    color: inherit;
+}
 
 main {
     flex: 1;

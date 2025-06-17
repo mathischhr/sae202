@@ -9,3 +9,29 @@ function sanitizeInput( string $data): string {
     $data = htmlspecialchars($data, ENT_QUOTES, 'UTF-8');
     return $data;
 }
+
+
+function sanitizeArray(array $data): array {
+    // Sanitize each element in the array
+    return array_map('sanitizeInput', $data);
+}
+
+function sanitizeDate(string $date): string {
+    $date = sanitizeInput($date);
+    $timestamp = strtotime($date);
+    
+    if ($timestamp === false) {
+        return '';
+    }
+
+    $year = date('Y', $timestamp);
+    $currentYear = date('Y');
+    $minYear = 1900;
+    $maxYear = $currentYear - 10;
+
+    if ($year < $minYear || $year > $maxYear) {
+        return '';
+    }
+
+    return date('Y-m-d', $timestamp);
+}
