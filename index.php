@@ -68,6 +68,8 @@ if (!isset($_SESSION['user']) && isset($_COOKIE['remember_user_token_sae202'])) 
                 'role' => $user['role']
             ];
 
+            var_dump($_SESSION['user']);
+
             // générer un nouveau token pour la session
             $newToken = bin2hex(random_bytes(32));
             $newHashedToken = password_hash($newToken, PASSWORD_DEFAULT);
