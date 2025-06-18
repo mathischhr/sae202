@@ -49,6 +49,34 @@ LOCK TABLES `comments` WRITE;
 UNLOCK TABLES;
 
 --
+-- Table structure for table `events`
+--
+
+DROP TABLE IF EXISTS `events`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `events` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `title` varchar(255) NOT NULL,
+  `location` varchar(255) DEFAULT NULL,
+  `organizer` varchar(255) NOT NULL DEFAULT 'Ollie',
+  `places_dispo` int(11) NOT NULL DEFAULT 50,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `events`
+--
+
+LOCK TABLES `events` WRITE;
+/*!40000 ALTER TABLE `events` DISABLE KEYS */;
+INSERT INTO `events` VALUES
+(1,'Disco Murder - Par Ollie','Troyes Québec','Ollie',150);
+/*!40000 ALTER TABLE `events` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `messages`
 --
 
@@ -65,7 +93,7 @@ CREATE TABLE `messages` (
   PRIMARY KEY (`id`),
   KEY `user_id` (`user_id`),
   CONSTRAINT `messages_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -105,6 +133,9 @@ CREATE TABLE `profiles` (
 
 LOCK TABLES `profiles` WRITE;
 /*!40000 ALTER TABLE `profiles` DISABLE KEYS */;
+INSERT INTO `profiles` VALUES
+(5,'Onioniton','Esdras','mmi24f07@mmi-troyes.fr','2005-04-12','0665656765','Avenue des Lombards','Troyes','10000'),
+(6,'','','mmi24c07@mmi-troyes.fr',NULL,'','','','');
 /*!40000 ALTER TABLE `profiles` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -134,6 +165,38 @@ LOCK TABLES `remember_tokens` WRITE;
 UNLOCK TABLES;
 
 --
+-- Table structure for table `reservations`
+--
+
+DROP TABLE IF EXISTS `reservations`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `reservations` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `user_id` int(11) NOT NULL,
+  `event_id` int(11) NOT NULL,
+  `date_reservation` date NOT NULL DEFAULT current_timestamp(),
+  `is_group` tinyint(1) DEFAULT 0,
+  `is_confirmed` tinyint(1) DEFAULT 0,
+  `nb_place` int(11) NOT NULL DEFAULT 1,
+  PRIMARY KEY (`id`),
+  KEY `user_id` (`user_id`,`event_id`),
+  KEY `event_id` (`event_id`),
+  CONSTRAINT `reservations_ibfk_1` FOREIGN KEY (`event_id`) REFERENCES `events` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `reservations_ibfk_2` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `reservations`
+--
+
+LOCK TABLES `reservations` WRITE;
+/*!40000 ALTER TABLE `reservations` DISABLE KEYS */;
+/*!40000 ALTER TABLE `reservations` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `users`
 --
 
@@ -146,12 +209,14 @@ CREATE TABLE `users` (
   `role` enum('user','admin','super_admin') DEFAULT NULL,
   `username` varchar(30) DEFAULT NULL,
   `password` longtext NOT NULL,
+  `admin_invitation_token` varchar(255) DEFAULT NULL,
+  `valid_admin` tinyint(1) NOT NULL,
   `created_at` date NOT NULL DEFAULT current_timestamp(),
   `last_connexion` date DEFAULT current_timestamp(),
   PRIMARY KEY (`id`),
   UNIQUE KEY `email` (`email`),
   UNIQUE KEY `username` (`username`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -161,8 +226,8 @@ CREATE TABLE `users` (
 LOCK TABLES `users` WRITE;
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
 INSERT INTO `users` VALUES
-(1,'esdras.onionkiton@etudiant.univ-reims.fr','user','floe38','$2y$10$BVsJGQfT2gWMK8/K0v.IseDM8UsEojIntMeWLjmFnBma44Vjo/AKO','2025-06-16','2025-06-16'),
-(3,'esdrasonionkiton@gmail.com','user','florian','$2y$10$Z2kke//Q3QJ/pwde6.XSJurNiO7nL6a3RP4bT3yTCB1bWFXRXEA0m','2025-06-16','2025-06-16');
+(5,'mmi24f07@mmi-troyes.fr','admin','mmi24f07','$2y$10$Vu.S8bM3htT0jfxxrcoo6OLWQuguqMqnbL7lTJQGt2jBgRMGTMHwG','915f39a2f8deb9db7b390436926e1771',1,'2025-06-18','2025-06-18'),
+(6,'mmi24c07@mmi-troyes.fr','admin','mmi24c07','$2y$10$ft6B3hqZxZvzrB3eE0wlmeGydP9eyMYNOxPJCQkjU/IfOlRpldf/6','356caca7833b8a0ace5c12b4d1df9f1c',0,'2025-06-18','2025-06-18');
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -175,4 +240,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2025-06-17  5:48:12
+-- Dump completed on 2025-06-18 19:37:17
