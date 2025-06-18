@@ -10,12 +10,25 @@ function getUserSentMessages(int $userId): array
     global $dbInstance;
 
     // Récupérer les messages de l'utilisateur
-    $query = "SELECT * FROM messages WHERE user_id = :user_id ORDER BY created_at DESC";
+    $query = "SELECT * FROM messages WHERE user_id = :user_id ORDER BY date_envoi DESC";
     $stmt = $dbInstance->prepare($query);
     $stmt->bindParam(':user_id', $userId);
     $stmt->execute();
 
-    return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    $messages = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+    foreach ($messages as &$message) {
+        // Récupérer le nom du destinataire
+        $destinataireInfos = getMessageDestinataireInfos($message['id']);
+        if ($destinataireInfos) {
+            $message['destinataire'] = $destinataireInfos['username'];
+        } else {
+            $message['destinataire'] = 'Inconnu';
+        }
+    }
+    return $messages;
+
+
 }
 
 function getUserReceivedMessages(int $userId): array
@@ -23,7 +36,7 @@ function getUserReceivedMessages(int $userId): array
     global $dbInstance;
 
     // Récupérer les messages reçus par l'utilisateur
-    $query = "SELECT * FROM messages WHERE destinataire_id = :user_id ORDER BY created_at DESC";
+    $query = "SELECT * FROM messages WHERE destinataire = :user_id ORDER BY date_envoi DESC";
     $stmt = $dbInstance->prepare($query);
     $stmt->bindParam(':user_id', $userId);
     $stmt->execute();
@@ -38,7 +51,7 @@ function getMessageDestinataireInfos(int $messageId): ?array
 
     // Récupérer les informations du destinataire du message
     $query = "SELECT u.id, u.username, u.email FROM messages m
-              JOIN users u ON m.destinataire_id = u.id
+              JOIN users u ON m.destinataire = u.id
               WHERE m.id = :message_id";
     $stmt = $dbInstance->prepare($query);
     $stmt->bindParam(':message_id', $messageId);
@@ -80,7 +93,7 @@ function createMessage(int $userId, int $destinataire,  string $content): array
 
     // Insérer un nouveau message dans la base de données
     $query = "INSERT INTO messages (user_id, destinataire, contenu, date_envoi, statut) 
-              VALUES (:user_id, :destinataire, :contenu, NOW(), 'non lu')";
+              VALUES (:user_id, :destinataire, :contenu, NOW(), 'non_lu')";
     $stmt = $dbInstance->prepare($query);
     $stmt->bindParam(':user_id', $userId);
     $stmt->bindParam(':destinataire', $destinataire);
@@ -99,4 +112,44 @@ function createMessage(int $userId, int $destinataire,  string $content): array
             'message' => 'Erreur lors de l\'envoi du message.'
         ];
     }
+}
+
+function getMessageById(int $messageId): ?array
+{
+    global $dbInstance;
+
+    // Récupérer le message par son ID
+    $query = "SELECT * FROM messages WHERE id = :message_id";
+    $stmt = $dbInstance->prepare($query);
+    $stmt->bindParam(':message_id', $messageId);
+    $stmt->execute();
+
+    if ($stmt->rowCount() > 0) {
+        $message = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        // passer les infos du destinataire
+        $destinataireInfos = getMessageDestinataireInfos($messageId);
+
+        if ($destinataireInfos) {
+            $message['destinataire'] = $destinataireInfos['username'];
+        } else {
+            $message['destinataire'] = 'Inconnu';
+        }
+
+        return $message;
+    }
+
+    return null; // Aucun message trouvé avec cet ID
+}
+
+function markMessageAsRead(int $messageId): bool
+{
+    global $dbInstance;
+
+    // Mettre à jour le statut du message en "lu"
+    $query = "UPDATE messages SET statut = 'lu' WHERE id = :message_id";
+    $stmt = $dbInstance->prepare($query);
+    $stmt->bindParam(':message_id', $messageId);
+
+    return $stmt->execute();
 }

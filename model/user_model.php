@@ -209,7 +209,15 @@ function getAdminUsers(): ?array
     $stmt->execute();
 
     if ($stmt->rowCount() > 0) {
-        return $stmt->fetchAll();
+        $users = $stmt->fetchAll();
+        foreach ($users as $key => $user) {
+
+            $users[$key]=  array_merge(getUserProfile($user['id']), $users[$key]) ; // Récupérer le profil de l'utilisateur
+            unset($users[$key]['password']); // Ne pas retourner le mot de passe
+            unset($users[$key]['admin_invitation_token']); // Ne pas retourner le token d'invitation
+            unset($users[$key]['valid_admin']); // Ne pas retourner la validité de l'utilisateur admin
+        }
+        return $users;
     }
 
     return null; // Aucun utilisateur admin trouvé

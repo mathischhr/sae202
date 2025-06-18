@@ -38,7 +38,7 @@
                 </ul>
             <?php endif; ?>
             <ul class="profile-links">
-                <li><a href="/profile/messagerie" class="go_to_link">Messagerie</a></li>
+                <li><a href="/messagerie" class="go_to_link">Messagerie</a></li>
                 <li><a href="/profile/password_reset" class="go_to_link">Changer de mot de passe</a></li>
                 <li><a href="/profile/reservations" class="go_to_link">Mes réservations </a></li>
             </ul>

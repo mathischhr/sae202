@@ -58,22 +58,7 @@ function index(): void
 }
 
 
-function messagerie(): void
-{
-    $title = "Messagerie";
-    $desc = "Gérez vos messages.";
 
-    // Vérifier si l'utilisateur est connecté
-    if (!isset($_SESSION['user'])) {
-        $_SESSION['errorMessage'] = 'Vous devez être connecté pour accéder à cette page.';
-        header('Location: /connexion');
-        exit;
-    }
-
-    require_once $GLOBALS['partials_dir'] . 'header.php';
-    require_once $GLOBALS['view_dir'] . 'profile_messagerie_view.php';
-    require_once $GLOBALS['partials_dir'] . 'footer.php';
-}
 
 function update(): void
 {

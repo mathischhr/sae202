@@ -46,6 +46,7 @@ if (!isset($favicon) && isset($GLOBALS['favicon'])) {
     <link rel="stylesheet" href="/view/partials/css/header.css">
     <link rel="stylesheet" href="/view/partials/css/main.css">
     <link rel="stylesheet" href="/view/partials/css/profile.css">
+    <link rel="stylesheet" href="/view/partials/css/messagerie.css">
     <link rel="shortcut icon" href="<?= $favicon; ?>" type="image/x-icon">
 
 
@@ -65,7 +66,7 @@ if (!isset($favicon) && isset($GLOBALS['favicon'])) {
                 <li><a href="/infos-pratiques">Infos pratiques</a></li>
                 <?php if (isset($_SESSION['user'])): ?>
                     <li><a href="/profile">Mon profile</a></li>
-                    <li><a href="/profile/messagerie">Messagerie</a></li>
+                    <li><a href="/messagerie">Messagerie</a></li>
                     <li><a href="/connexion/logout">Déconnexion</a></li>
                 <?php else: ?>
                     <li><a href="/inscription">Inscription </a></li>
