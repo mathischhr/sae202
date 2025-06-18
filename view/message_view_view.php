@@ -7,7 +7,7 @@
             <p><strong>Date d'envoi:</strong> <?= htmlspecialchars($message['date_envoi']) ?></p>
             <p><strong>Contenu:</strong></p>
             <div class="message_content">
-                <?= nl2br(htmlspecialchars($message['contenu'])) ?>
+                <?= nl2br($message['contenu']) ?>
             </div>
         </div>
 
