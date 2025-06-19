@@ -246,7 +246,7 @@ function getUserByToken(string $token): ?array
     global $dbInstance;
 
     // Récupérer l'utilisateur par le token le plus récent
-    $query = "SELECT * FROM users u
+    $query = "SELECT u.*, rt.token FROM users u
               JOIN remember_tokens rt ON u.id = rt.user_id
               WHERE rt.token = :token AND rt.expires_at > NOW()
               ORDER BY rt.expires_at DESC LIMIT 1";
