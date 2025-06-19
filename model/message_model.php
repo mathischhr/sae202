@@ -77,19 +77,32 @@ function deleteMessage(int $messageId): bool
     return $stmt->execute();
 }
 
-function createMessage(int $userId, int $destinataire,  string $content): array
+function createMessage(int $userId, int $destinataire,  string $content, bool $isAdmin = false): array
 {
     global $dbInstance;
 
+
+
     // Vérifier si le destinataire existe
-    $adminUsers = getAdminUsers();
-    if (!in_array($destinataire, array_column($adminUsers, 'id'))) {
+   
+    if($isAdmin) {
+        // Si l'utilisateur est admin, on peut envoyer à n'importe qui
+        $query = "SELECT id FROM users WHERE id = :destinataire";
+    } else {
+        // Sinon, on vérifie que le destinataire est un utilisateur normal
+        $query = "SELECT id FROM users WHERE id = :destinataire AND role != 'admin'";
+    }
+
+    $stmt = $dbInstance->prepare($query);
+    $stmt->bindParam(':destinataire', $destinataire);
+    $stmt->execute();
+
+    if ($stmt->rowCount() === 0) {
         return [
             'success' => false,
             'message' => 'Destinataire invalide.'
         ];
     }
-
 
     // Insérer un nouveau message dans la base de données
     $query = "INSERT INTO messages (user_id, destinataire, contenu, date_envoi, statut) 

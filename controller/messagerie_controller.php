@@ -51,7 +51,7 @@ function send(){
         }
 
         // Enregistrer le message dans la base de données
-        $result = createMessage($userId, $destinataire, $contenu);
+        $result = createMessage($userId, $destinataire, $contenu, $_SESSION['user']['role'] === 'admin');
 
       if($result['success']){
             $_SESSION['successMessage'] =$result['message'];

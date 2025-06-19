@@ -1,6 +1,7 @@
 
 <div class="reservations_container">
     <?php if (!empty($reservations)): ?>
+        <h2>Mes Réservations passées</h2>
         <ul class="reservations_list">
             <?php foreach ($reservations as $reservation): ?>
                 <li class="reservation_item">
@@ -10,14 +11,15 @@
                         <p><strong>Confirmée:</strong> <?= $reservation['is_confirmed'] ? 'Oui' : 'Non' ?></p>
                     </div>
                     <div class="reservation_actions">
-                        <a href="/reservations/<?= $reservation['id'] ?>" class="view_link">Voir</a>
-                        <form method="post" action="/reservations/<?= $reservation['id'] ?>/delete" class="delete_form">
-                            <button type="submit" class="delete_button">Annuler</button>
-                        </form>
+                        <a href="/reservations/view?id=<?= $reservation['id'] ?>" class="view_link">Voir</a>
+                        <a href="/reservations/edit?id=<?= $reservation['id'] ?>" class="edit_link">Modifier</a>
+                        <a href="/reservations/cancel?id=<?= $reservation['id'] ?>" class="cancel_link">Annuler</a>
+
                     </div>
                 </li>
             <?php endforeach; ?>
         </ul>
+        <a href="/reservations/create" class="go_to_link">Réserver une nouvelle place</a>
     <?php else: ?>
         <p>Aucune réservation trouvée.</p>
 
