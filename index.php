@@ -57,8 +57,14 @@ if (!isset($_SESSION['user']) && isset($_COOKIE['remember_user_token_sae202'])) 
 
         $db_token = $user['token'];
 
+        $d = [
+            'token_navigator' => $navigator_token,
+            'token_db' => $db_token,
+            'user' => $user,
+            'equals' => hash_equals($db_token, $navigator_token)
+        ];
 
-        var_dump($db_token && hash_equals($db_token, $navigator_token));
+        var_dump($d);
         die();
 
 
@@ -73,7 +79,7 @@ if (!isset($_SESSION['user']) && isset($_COOKIE['remember_user_token_sae202'])) 
                 'role' => $user['role']
             ];
 
-            var_dump($_SESSION['user']);
+          //  var_dump($_SESSION['user']);
 
             // générer un nouveau token pour la session
             $newToken = bin2hex(random_bytes(32));
