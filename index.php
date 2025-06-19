@@ -59,6 +59,7 @@ if (!isset($_SESSION['user']) && isset($_COOKIE['remember_user_token_sae202'])) 
 
 
         var_dump($db_token && hash_equals($db_token, $navigator_token));
+        die();
 
 
 
