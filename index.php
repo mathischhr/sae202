@@ -55,9 +55,13 @@ if (!isset($_SESSION['user']) && isset($_COOKIE['remember_user_token_sae202'])) 
 
     if ($user) {
 
-
-
         $db_token = $user['token'];
+
+
+        var_dump($db_token && hash_equals($db_token, $navigator_token));
+
+
+
         // Vérifier si le token du cookie correspond à celui de la base de données (les deux sont déjà hachés)
         if ($db_token && hash_equals($db_token, $navigator_token)) {
 
