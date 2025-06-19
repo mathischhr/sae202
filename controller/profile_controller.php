@@ -21,14 +21,12 @@ function index(): void
 
     $userProfile = getUserProfile($_SESSION['user']['id']);
 
-    $d = [
-        'userProfile' => $userProfile,
-        'session' => $_SESSION['user'] ?? null
-    ];
-
-    var_dump($d);
-
-    die();
+    // $d = [
+    //     'userProfile' => $userProfile,
+    //     'session' => $_SESSION['user'] ?? null
+    // ];
+    // var_dump($d);
+    // die();
 
 
     if (!$userProfile) {

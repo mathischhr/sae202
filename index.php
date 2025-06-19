@@ -57,13 +57,13 @@ if (!isset($_SESSION['user']) && isset($_COOKIE['remember_user_token_sae202'])) 
 
         $db_token = $user['token'];
 
-        $d = [
-            'token_navigator' => $navigator_token,
-            'token_db' => $db_token,
-            'user' => $user,
-            'equals' => hash_equals($db_token, $navigator_token)
-        ];
-         var_dump($d);
+        // $d = [
+        //     'token_navigator' => $navigator_token,
+        //     'token_db' => $db_token,
+        //     'user' => $user,
+        //     'equals' => hash_equals($db_token, $navigator_token)
+        // ];
+        //  var_dump($d);
 
     
     
