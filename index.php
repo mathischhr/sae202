@@ -57,33 +57,15 @@ if (!isset($_SESSION['user']) && isset($_COOKIE['remember_user_token_sae202'])) 
 
         $db_token = $user['token'];
 
-        $d = [
-            'token_navigator' => $navigator_token,
-            'token_db' => $db_token,
-            'user' => $user,
-            'equals' => hash_equals($db_token, $navigator_token)
-        ];
+        // $d = [
+        //     'token_navigator' => $navigator_token,
+        //     'token_db' => $db_token,
+        //     'user' => $user,
+        //     'equals' => hash_equals($db_token, $navigator_token)
+        // ];
 
-      foreach ($d as $key => $value) {
-            if (is_null($value)) {
-                $d[$key] = 'null';
-            } elseif (is_array($value) || is_object($value)) {
-                $d[$key] = json_encode($value);
-            } else {
-                $d[$key] = $value;
-            }
-        }
-
-        // Afficher les données pour le débogage
-        echo '<pre>';
-        print_r($d);
-        echo '</pre>';
-
-        // Terminer le script pour éviter d'exécuter le reste du code
-        if (isset($_GET['debug']) && $_GET['debug'] == 'true') {
-            die();
-      }
-        die();
+    
+    
 
 
 

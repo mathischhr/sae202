@@ -256,7 +256,10 @@ function getUserByToken(string $token): ?array
     $stmt->execute();
 
     if ($stmt->rowCount() > 0) {
-        return $stmt->fetch();
+        $user = $stmt->fetch();
+        unset($user['password']); // Ne pas retourner le mot de passe
+        unset($user['admin_invitation_token']); // Ne pas retourner le token d'invitation
+        return $user;
     }
 
     return null; // Aucun utilisateur trouvé avec ce token
