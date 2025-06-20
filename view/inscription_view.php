@@ -1,9 +1,6 @@
 <div class="form-container">
 
-  <div class="brand-logo">
-      <img src="<?= $GLOBALS['ogImage'] ?>" alt="Logo Disco" class="logo_disco">
-      <h2>Inscription </h2>
-  </div>
+  
     <form action="/inscription/formHandle" method="post">
 
         <div class="form-control_email">
