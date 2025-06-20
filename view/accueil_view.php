@@ -1,7 +1,7 @@
 <div class="intro">
   <!-- Logo illustratif (non décoratif) -->
   <div class="intro-svg">
-    <img src="images/logo_desktop.svg" alt="Logo de l'événement">
+    <img src="/images/logo_desktop.svg" alt="Logo de l'événement">
   </div>
 
   <h1 id="concept">Une enquête sur le dancefloor</h1>
