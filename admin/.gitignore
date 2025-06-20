@@ -1,0 +1,12 @@
+# ignorer le dossier node_modules
+node_modules/
+# ignorer le fichier package-lock.json
+package-lock.json
+package.json
+# ignorer les fichiers de log
+*.log
+# ignorer les fichiers de configuration de l'éditeur
+.vscode/
+# ignorer les fichiers de configuration de l'IDE
+.idea/
+.idea/

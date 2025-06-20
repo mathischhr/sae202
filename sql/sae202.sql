@@ -16,36 +16,38 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `comments`
+-- Table structure for table `avis`
 --
 
-DROP TABLE IF EXISTS `comments`;
+DROP TABLE IF EXISTS `avis`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `comments` (
+CREATE TABLE `avis` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `user_id` int(11) NOT NULL,
+  `rate` int(11) NOT NULL DEFAULT 4,
   `content` varchar(255) NOT NULL,
   `date` date NOT NULL DEFAULT current_timestamp(),
-  `statut` enum('publie','brouillon','rejete') NOT NULL,
-  `updated_at` date NOT NULL DEFAULT current_timestamp(),
-  `deleted` tinyint(1) NOT NULL,
-  `archived` tinyint(1) NOT NULL,
-  `reply` tinyint(1) DEFAULT NULL,
-  `repling_to` int(11) DEFAULT NULL,
+  `statut` enum('publie','brouillon','rejete') NOT NULL DEFAULT 'brouillon',
   PRIMARY KEY (`id`),
   KEY `user_id` (`user_id`),
-  CONSTRAINT `comments_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+  CONSTRAINT `avis_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `comments`
+-- Dumping data for table `avis`
 --
 
-LOCK TABLES `comments` WRITE;
-/*!40000 ALTER TABLE `comments` DISABLE KEYS */;
-/*!40000 ALTER TABLE `comments` ENABLE KEYS */;
+LOCK TABLES `avis` WRITE;
+/*!40000 ALTER TABLE `avis` DISABLE KEYS */;
+INSERT INTO `avis` VALUES
+(7,5,4,'D&#039;accord j&#039;ai compris','2025-06-19','publie'),
+(8,5,4,'C&#039;est super','2025-06-19','brouillon'),
+(9,5,1,'A venir sans la loc','2025-06-19','publie'),
+(12,5,3,'gddg','2025-06-19','rejete'),
+(13,5,4,'C&#039;est une bonne idée','2025-06-20','brouillon');
+/*!40000 ALTER TABLE `avis` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -72,7 +74,7 @@ CREATE TABLE `events` (
 LOCK TABLES `events` WRITE;
 /*!40000 ALTER TABLE `events` DISABLE KEYS */;
 INSERT INTO `events` VALUES
-(1,'Disco Murder - Par Ollie','Troyes Québec','Ollie',150);
+(1,'Disco Murder - Juin 2025','Troyes Québec','Ollie',370);
 /*!40000 ALTER TABLE `events` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -93,7 +95,7 @@ CREATE TABLE `messages` (
   PRIMARY KEY (`id`),
   KEY `user_id` (`user_id`),
   CONSTRAINT `messages_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -102,6 +104,9 @@ CREATE TABLE `messages` (
 
 LOCK TABLES `messages` WRITE;
 /*!40000 ALTER TABLE `messages` DISABLE KEYS */;
+INSERT INTO `messages` VALUES
+(11,5,'Bonjour','2025-06-19','lu',5),
+(12,5,'xvcbb,k','2025-06-19','lu',5);
 /*!40000 ALTER TABLE `messages` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -184,7 +189,7 @@ CREATE TABLE `reservations` (
   KEY `event_id` (`event_id`),
   CONSTRAINT `reservations_ibfk_1` FOREIGN KEY (`event_id`) REFERENCES `events` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `reservations_ibfk_2` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -193,6 +198,12 @@ CREATE TABLE `reservations` (
 
 LOCK TABLES `reservations` WRITE;
 /*!40000 ALTER TABLE `reservations` DISABLE KEYS */;
+INSERT INTO `reservations` VALUES
+(1,5,1,'2025-06-28',1,1,15),
+(2,5,1,'2025-06-28',1,1,150),
+(3,5,1,'2025-06-28',1,0,45),
+(4,5,1,'2025-07-24',1,0,14),
+(5,5,1,'2025-06-30',1,1,91);
 /*!40000 ALTER TABLE `reservations` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -240,4 +251,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2025-06-18 19:37:17
+-- Dump completed on 2025-06-20  0:59:00
