@@ -60,14 +60,15 @@ function create_user(string $username, string $password, string $email, ?string 
 
     // Hacher le mot de passe pour le stockage sécurisé
     $hashedPassword = password_hash($password, PASSWORD_BCRYPT);
-
+  $date = date('Y-m-d H:i:s');
     // Enregistrer l'utilisateur dans la base de données
-    $query = "INSERT INTO users (username, email, password, role, valid_admin) VALUES (:username, :email, :pwd, :role, 0 )";
+    $query = "INSERT INTO users (username, email, password, role, valid_admin, created_at) VALUES (:username, :email, :pwd, :role, 0, :created_at)";
     $stmt = $dbInstance->prepare($query);
     $stmt->bindParam(':username', $username);
     $stmt->bindParam(':email', $email);
     $stmt->bindParam(':pwd', $hashedPassword);
     $stmt->bindParam(':role', $role);
+    $stmt->bindParam(':created_at', $date);
 
     if ($stmt->execute()) {
 
@@ -158,6 +159,7 @@ function create_user(string $username, string $password, string $email, ?string 
 function login_user(string $username, string $password, bool $remember = true): array
 {
    
+    global $dbInstance;
     $user = getUser($username);
 
     //   var_dump($user);
@@ -177,6 +179,16 @@ function login_user(string $username, string $password, bool $remember = true): 
 
         unset($user['password']);
 
+        
+        // mettre à jour sa dernière connexion
+        $date = date('Y-m-d H:i:s');
+        $query = "UPDATE users SET last_connexion = :last_connexion WHERE id = :user_id";
+        $stmt = $dbInstance->prepare($query);
+        $stmt->bindParam(':last_connexion', $date);
+        $stmt->bindParam(':user_id', $user['id']);
+
+        $stmt->execute();
+
         $hashedToken = "";
         // Si l'utilisateur a choisi de rester connecté, on peut gérer le cookie
         if ($remember && $_SERVER['REQUEST_SCHEME']  === 'https') {
@@ -191,6 +203,8 @@ function login_user(string $username, string $password, bool $remember = true): 
             // Enregistrer le jeton dans la base de données
             createUserToken($userId, $hashedToken);
         }
+
+
         // Authentification réussie
         return ['success' => true, 'message' => 'Authentification réussie.', 'token' => $hashedToken, 'user' => $user];
     } else {

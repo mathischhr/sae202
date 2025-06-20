@@ -90,7 +90,7 @@ function createMessage(int $userId, int $destinataire,  string $content, bool $i
         $query = "SELECT id FROM users WHERE id = :destinataire";
     } else {
         // Sinon, on vérifie que le destinataire est un utilisateur normal
-        $query = "SELECT id FROM users WHERE id = :destinataire AND role != 'admin'";
+        $query = "SELECT id FROM users WHERE id = :destinataire AND role = 'admin'";
     }
 
     $stmt = $dbInstance->prepare($query);
@@ -104,14 +104,16 @@ function createMessage(int $userId, int $destinataire,  string $content, bool $i
         ];
     }
 
+    $date_envoi = date('Y-m-d H:i:s');
     // Insérer un nouveau message dans la base de données
     $query = "INSERT INTO messages (user_id, destinataire, contenu, date_envoi, statut) 
-              VALUES (:user_id, :destinataire, :contenu, NOW(), 'non_lu')";
+              VALUES (:user_id, :destinataire, :contenu, :date_envoi, 'non_lu')";
     $stmt = $dbInstance->prepare($query);
     $stmt->bindParam(':user_id', $userId);
     $stmt->bindParam(':destinataire', $destinataire);
     $stmt->bindParam(':contenu', $content);
-     $stmt->execute();
+    $stmt->bindParam(':date_envoi', $date_envoi);
+    $stmt->execute();
 
 
     if ($stmt->rowCount() > 0) {

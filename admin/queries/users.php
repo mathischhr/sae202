@@ -72,3 +72,32 @@ function countUsers() {
 
     return $stmt->fetchColumn();
 }
+
+
+function getNonAdminUsers() {
+    global $dbInstance;
+
+    $query = "SELECT * FROM users WHERE role != 'admin' ORDER BY username ASC";
+    $stmt = $dbInstance->prepare($query);
+    $stmt->execute();
+
+    $users = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+    foreach ($users as &$user) {
+        unset($user['password']); // Remove password for security
+        unset($user['admin_invitation_token']); // Remove admin invitation token if exists
+    }
+    return $users;
+}
+
+function getAdminInfos() {
+    global $dbInstance;
+
+    $query = "SELECT email, id FROM users WHERE role = 'admin' LIMIT 1";
+    $stmt = $dbInstance->prepare($query);
+    $stmt->execute();
+
+    $result = $stmt->fetch(PDO::FETCH_ASSOC);
+
+    return $result ?? null;
+}

@@ -4,6 +4,9 @@ $pageTitle = "Gestion des messages";
 $pageDescription = "Gérer les messages de l'application";
 
 require_once "queries/messages.php";
+require_once "queries/users.php";
+
+$adminInfos = getAdminInfos();
 $messages = getMessages();
 
 
@@ -11,6 +14,13 @@ require_once __DIR__ . '/partials/header.php';
 ?>
 
 <div class="container mx-auto px-4 py-8">
+
+<div class="flex justify-end flex-[100%] mb-6">
+    <a href="/admin/message_form.php" class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 dark:bg-indigo-500 dark:hover:bg-indigo-600">
+        Envoyer un message
+    </a>
+
+</div>
 
     <?php if ($messages): ?>
         <div class="w-full overflow-hidden rounded-lg shadow-xs mt-8">
@@ -28,7 +38,7 @@ require_once __DIR__ . '/partials/header.php';
                     <tbody class="bg-white divide-y dark:divide-gray-700 dark:bg-gray-800">
                         <?php foreach ($messages as $message): ?>
                             <tr class="text-gray-700 dark:text-gray-400">
-                                <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900"><?php echo htmlspecialchars($message['id']); ?></td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm font-medium  text-gray-600 dark:text-gray-400"><?php echo htmlspecialchars($message['id']); ?></td>
                                 <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
                                   <div class="flex items-center text-sm">
                                         <!-- Avatar with inset shadow -->
@@ -44,18 +54,25 @@ require_once __DIR__ . '/partials/header.php';
                                                 aria-hidden="true"></div>
                                         </div>
                                         <div>
-                                            <p class="font-semibold"> <?php echo htmlspecialchars($message['author']); ?> </p>
+                                            <p class="font-semibold text-gray-600 dark:text-gray-400"> <?php echo htmlspecialchars($message['author']); ?> </p>
                                             <p class="text-xs text-gray-600 dark:text-gray-400">
-                                                <?php echo htmlspecialchars($message['email']); ?> </p>
+                                                <?php echo htmlspecialchars($message['email']) ?> </p>
                                             </p>
                                         </div>
                                     </div>
                                 </td>
-                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900"><?php echo htmlspecialchars($message['contenu']); ?></td>
-                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500"><?php echo htmlspecialchars($message['date']); ?></td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-600 dark:text-gray-400"><?php echo htmlspecialchars($message['contenu']); ?></td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-600 dark:text-gray-400"><?php echo htmlspecialchars($message['date']); ?></td>
                                 <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                                     <a href="/admin/messages_action.php?action=view&id=<?php echo $message['id']; ?>" class="text-indigo-600 hover:text-indigo-900">Voir</a>
-                                    <a href="/admin/messages_action.php?action=reply&id=<?php echo $message['id']; ?>" class="text-green-600 hover:text-green-900 ml-4">Répondre</a>
+                                    <?php if ($message['is_replied']): ?>
+                                        <span class="text-green-600 hover:text-green-900 ml-4">Répondu</span>
+                                    <?php else: ?>
+                                        <span class="text-red-600 hover:text-red-900 ml-4">Non répondu</span>
+                                    <?php endif; ?>
+                                    <?php if ( $message['email'] !== $adminInfos['email'] && $message['is_replied'] < 1): ?>
+                                        <a href="/admin/messages_action.php?action=reply&id=<?php echo $message['id']; ?>" class="text-green-600 hover:text-green-900 ml-4">Répondre</a>
+                                    <?php endif; ?>
                                 </td>
                             </tr>
 
