@@ -55,17 +55,17 @@ if (!isset($favicon) && isset($GLOBALS['favicon'])) {
         <div class="header-top">
             <!-- Logo Mobile -->
             <a href="/" class="logo_mobile" aria-label="Accueil">
-                <img src="images/logo_mobile.svg" alt="Logo mobile du site">
+                <img src="/images/logo_mobile.svg" alt="Logo mobile du site">
             </a>
 
             <!-- Logo Desktop -->
             <a href="/" class="logo_desktop" aria-label="Accueil">
-                <img src="images/logo_desktop.svg" alt="Logo desktop de l'événement">
+                <img src="/images/logo_desktop.svg" alt="Logo desktop de l'événement">
             </a>
 
             <!-- Bouton Menu -->
             <button class="menu-button" aria-label="Menu principal">
-                <img src="images/menu_hamburger.svg" alt="Icône menu hamburger" width="33" height="29">
+                <img src="/images/menu_hamburger.svg" alt="Icône menu hamburger" width="33" height="29">
             </button>
         </div>
 
@@ -73,16 +73,16 @@ if (!isset($favicon) && isset($GLOBALS['favicon'])) {
         <div class="account-links desktop-only">
             <?php if (!isset($_SESSION['user'])): ?>
                 <a href="/connexion" class="login-link">
-                    <img src="images/menu_hamburger.svg" alt="Icône connexion" class="icon">
+                    <img src="/images/menu_hamburger.svg" alt="Icône connexion" class="icon">
                     Connexion
                 </a>
                 <a href="/inscription" class="signup-link">
-                    <img src="images/couteau_picto.svg" alt="Icône inscription" class="icon">
+                    <img src="/images/couteau_picto.svg" alt="Icône inscription" class="icon">
                     Inscription
                 </a>
             <?php else: ?>
                 <a href="/connexion/logout" class="logout-link">
-                    <img src="images/menu_hamburger.svg" alt="Icône déconnexion" class="icon">
+                    <img src="/images/menu_hamburger.svg" alt="Icône déconnexion" class="icon">
                     Déconnexion
                 </a>
             <?php endif; ?>
