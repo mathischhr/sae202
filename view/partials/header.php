@@ -81,6 +81,12 @@ if (!isset($favicon) && isset($GLOBALS['favicon'])) {
                     Inscription
                 </a>
             <?php else: ?>
+                <a href="/profile" class="messages-link">
+                   Mon compte
+                </a>
+                <a href="/messagerie" class="messages-link">
+                    Messagerie
+                </a>
                 <a href="/connexion/logout" class="logout-link">
                     <img src="/images/menu_hamburger.svg" alt="Icône déconnexion" class="icon">
                     Déconnexion
