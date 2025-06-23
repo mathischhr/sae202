@@ -9,7 +9,7 @@
   <div class="brand-logo">
       <h2>Connexion</h2>
   </div>
-    <form action="/inscription/formHandle" method="post">
+    <form action="/connexion/formHandle" method="post">
 
         <div class="form-control_username">
             <input type="text" id="username" name="username" required placeholder="E-mail">

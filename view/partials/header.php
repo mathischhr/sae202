@@ -101,10 +101,14 @@ if (!isset($favicon) && isset($GLOBALS['favicon'])) {
                 <li><a href="/concept">Concept</a></li>
                 <li><a href="/infos-pratiques">Infos pratiques</a></li>
                 <li><a href="/agence" target="_blank" rel="noopener">Ollie Agence</a></li>
-
-                <!-- Liens visibles uniquement sur mobile -->
-                <li class="mobile-only"><a href="/inscription">Inscription</a></li>
-                <li class="mobile-only"><a href="/connexion">Connexion</a></li>
+     <?php if (isset($_SESSION['user'])): ?>
+                    <li class="mobile-only"><a href="/profile">Mon compte</a></li>
+                    <li class="mobile-only"><a href="/messagerie">Messagerie</a></li>
+                    <li class="mobile-only"><a href="/connexion/logout">Déconnexion</a></li>
+                <?php else: ?>
+                    <li class="mobile-only"><a href="/connexion">Connexion</a></li>
+                    <li class="mobile-only"><a href="/inscription">Inscription</a></li>
+                <?php endif; ?>
             </ul>
         </nav>
     </header>

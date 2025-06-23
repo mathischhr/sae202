@@ -40,7 +40,7 @@
   </p>
 
   <!-- Déroulement du jeu -->
-  <h1>Déroulement du jeu</h1>
+ <!-- <h1>Déroulement du jeu</h1>
   <ul>
     <li>
       <strong>1. Accueil & brief (15-20 min)</strong><br>
@@ -54,9 +54,9 @@
       <strong>3. Révélation finale (30 min)</strong><br>
       Bulletins d’accusation, dévoilement du coupable et résolution de l’affaire
     </li>
-  </ul>
+  </ul>-->
 
-  <!-- Règles de comportement -->
+  <!-- Règles de comportement
   <h1>Règles de comportement</h1>
   <ul>
     <li>Restez dans votre personnage</li>
@@ -65,7 +65,7 @@
     <li>Pas de violence réelle – le jeu reste bon enfant</li>
   </ul>
 
-  <!-- Conseils de jeu -->
+  Conseils de jeu
   <h1>Conseils pour bien jouer</h1>
   <ul>
     <li>Écoutez bien les autres : tout peut être un indice</li>
@@ -79,9 +79,12 @@
   </p>
 </div>
 
-<!-- Section trailer -->
+
+ Section trailer -->
+</div>
 <div class="contenu">
   <h2 id="trailer1">Trailer</h2>
   <!-- Tu peux insérer ici une iframe YouTube ou une vidéo embarquée -->
 </div>
+
 
