@@ -6,9 +6,13 @@
   
   <div class="form-container">
 
+<<<<<<< HEAD
   <div class="brand-logo">
       <h2>Inscription </h2>
   </div>
+=======
+  
+>>>>>>> refs/remotes/origin/main
     <form action="/inscription/formHandle" method="post">
 
         <div class="form-control_email">
