@@ -49,8 +49,6 @@ if (!isset($favicon) && isset($GLOBALS['favicon'])) {
 </head>
 
 <body>
-
-
     <header class="main-header">
         <div class="header-top">
             <!-- Logo Mobile -->

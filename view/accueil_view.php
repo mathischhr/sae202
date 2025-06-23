@@ -26,10 +26,43 @@
   <h2 id="trailer">Trailer</h2>
   <!-- (Tu peux ajouter ici une iframe vidéo ou une image de bande-annonce) -->
 
+  <div class="avis-header">
   <h2 id="avis">Vos avis</h2>
-  <!-- (Prévoir une section avec des témoignages ou un carrousel de commentaires) -->
+  <a href="#tous-les-avis" class="btn-voir-plus">Voir plus d’avis</a>
+</div>
 
+<div class="avis-liste">
+  <div class="avis-box">
+    <p>Jean Dupont</p>
+    <p>Super service, je recommande !</p>
+  </div>
+
+  <div class="avis-box">
+    <p>Claire Martin</p>
+    <p>Très professionnel et rapide.</p>
+  </div>
+
+  <div class="avis-box">
+    <p>Claire Martin</p>
+    <p>Très professionnel et rapide.</p>
+  </div>
+
+  <div class="avis-box">
+    <p>Luc Bernard</p>
+    <p>Service client au top !</p>
+  </div>
+</div>
+
+<div class="avis-button-container">
+  <button class="avis-button">Laisser un avis</button>
+</div>
+
+<section class="newsletter-section">
   <h2 id="newsletter">Newsletters</h2>
-  <!-- (Ici peut aller un formulaire d'inscription ou des archives de newsletters) -->
+  <div class="newsletter-button-container">
+    <button class="newsletter-button-contenu">Inscrivez-vous pour recevoir nos dernières actualités.</button>
+  </div>
+</section>
+
 </div>
 

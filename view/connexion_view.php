@@ -1,32 +1,25 @@
-<div class="form-container">
+<div class="intro">
+  <!-- Logo illustratif (non décoratif) -->
+  <div class="intro-svg">
+    <img src="/images/logo_desktop.svg" alt="Logo de l'événement">
+  </div>
+  
+  <div class="form-container">
 
-    <h2>Connexion</h2>
-    <form action="/connexion/formHandle" method="post">
+  <div class="brand-logo">
+      <h2>Connexion</h2>
+  </div>
+    <form action="/inscription/formHandle" method="post">
 
         <div class="form-control_username">
-            <label for="username">Nom d'utilisateur :</label>
-            <input type="text" id="username" name="username" required placeholder="Entrez votre nom d'utilisateur">
+            <input type="text" id="username" name="username" required placeholder="E-mail">
         </div>
 
         <div class="form-control_password">
-            <label for="password">Mot de passe :</label>
-            <input type="password" id="password" name="password" required placeholder="*********">
+            <input type="password" id="password" name="password" required placeholder="Mot De Passe">
         </div>
-        <div class="form-control_remember_me">
-            <input type="checkbox" id="remember_me" name="remember_me">
-            <label for="remember_me">Se souvenir de moi.</label>
-        </div>
-        <div class="form-control_submit">
-            <button type="submit">Se connecter</button>
+        <div class="form-control_submit-connect">
+            <button type="submit">Connexion</button>
         </div>
     </form>
-    <div class="link_to_inscription">
-        <p>Pas encore inscrit ? </p><a href="/inscription" class="go_to_link">Inscrivez-vous ici</a>
-    </div>
-    <?php if (isset($errorMessage)): ?>
-      <div class="form-errors">
-          <p class="error"><?= $errorMessage; ?></p>
-      </div>
-    <?php endif; ?>
-
 </div>

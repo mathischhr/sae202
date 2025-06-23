@@ -38,7 +38,7 @@
         <!-- Horaires -->
         <div class="horaires">
             <h1>Date des événements</h1>
-            <p>Les dates officielles seront bientôt communiquées. Restez connectés pour ne rien manquer !</p>
+            <p>Tous les évènements commencent à 20h00 et finissent à 00h00</p>
             <!-- Tu peux ajouter ici une liste ou un tableau des dates, si disponible -->
         </div>
     </div>
@@ -59,4 +59,37 @@
             Un prix sera décerné au meilleur look.
         </li>
     </ul>
+</div>
+
+<div class="separators" aria-hidden="true">
+  <hr class="ligne bleu">
+  <hr class="ligne jaune">
+  <hr class="ligne orange">
+  <hr class="ligne rouge">
+  <hr class="ligne marron">
+</div>
+
+<div class="image-container-overlay">
+  <img src="images/sommaire 1.jpg" alt="Fond coloré" />
+  <div class="overlay-content">
+    <img src="images/murderpartylogo_noir.svg" alt="Logo" class="overlay-logo" />
+    <p>Tarifs</p>
+    <button class="btn-primary">Unitaire</button>
+    <button class="btn-secondary">Groupé</button>
+  </div>
+</div>
+
+<div class="below-texts">
+  <p>Entre 8-20 personnes</p>
+  <p>A partir de 16 ans</p>
+</div>
+
+<div class="contact-section">
+  <h2 id="contacter">Nous contacter</h2>
+  <img src="images/pubollie 1.jpg" alt="Illustration contact" class="contact-image" />
+  <div class="contact-texts">
+    <p>mail.ollie@gmail.com</p>
+    <p>+33 03 45 45 45 45</p>
+    <p>Paris</p>
+  </div>
 </div>
