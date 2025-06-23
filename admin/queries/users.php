@@ -2,7 +2,8 @@
 
 require_once dirname(__DIR__, 2) . "/conf/conf.inc.php";
 
-function getUsers() {
+function getUsers(): array
+{
     global $dbInstance;
 
     $query = "SELECT * FROM users ORDER BY username ASC";
@@ -29,7 +30,8 @@ function getUserById($id) {
     return $user;
 }
 
-function createUser($username, $password, $email) {
+function createUser($username, $password, $email): bool
+{
     global $dbInstance;
 
     $query = "INSERT INTO users (username, password, email) VALUES (:username, :password, :email)";
@@ -41,7 +43,8 @@ function createUser($username, $password, $email) {
     return $stmt->execute();
 }
 
-function updateUser($id, $username, $email) {
+function updateUser($id, $username, $email): bool
+{
     global $dbInstance;
 
     $query = "UPDATE users SET username = :username, email = :email WHERE id = :id";
@@ -53,7 +56,8 @@ function updateUser($id, $username, $email) {
     return $stmt->execute();
 }
 
-function deleteUser($id) {
+function deleteUser($id): bool
+{
     global $dbInstance;
 
     $query = "DELETE FROM users WHERE id = :id";
@@ -74,7 +78,8 @@ function countUsers() {
 }
 
 
-function getNonAdminUsers() {
+function getNonAdminUsers(): array
+{
     global $dbInstance;
 
     $query = "SELECT * FROM users WHERE role != 'admin' ORDER BY username ASC";
