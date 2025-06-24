@@ -18,9 +18,19 @@ function getUserSentMessages(int $userId): array
     $messages = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
     foreach ($messages as &$message) {
+
+        $message['author'] = getMessageExpediteurInfos($message['user_id']);
+
+        if ($message['author']) {
+            $message['author'] = $message['author']['username'];
+        } else {
+            $message['author'] = 'Inconnu';
+        }
+
         // Récupérer le nom du destinataire
         $destinataireInfos = getMessageDestinataireInfos($message['id']);
         if ($destinataireInfos) {
+
             $message['destinataire'] = $destinataireInfos['username'];
         } else {
             $message['destinataire'] = 'Inconnu';
@@ -169,6 +179,14 @@ function getMessageById(int $messageId): ?array
 
     if ($stmt->rowCount() > 0) {
         $message = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        // Récupérer les informations de l'expéditeur
+        $expediteurInfos = getMessageExpediteurInfos($message['user_id']);
+        if ($expediteurInfos) {
+            $message['author'] = $expediteurInfos['username'];
+        } else {
+            $message['author'] = 'Inconnu';
+        }
 
         // passer les infos du destinataire
         $destinataireInfos = getMessageDestinataireInfos($messageId);

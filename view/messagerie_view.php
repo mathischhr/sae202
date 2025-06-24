@@ -16,16 +16,17 @@
                     <table>
                         <thead>
                             <tr>
+                                <th>Expéditeur</th>
                                 <th>Destinataire</th>
-                                <th>Statut</th>
                                 <th>Actions</th>
                             </tr>
                         </thead>
                         <tbody>
                             <?php foreach ($messages as $message): ?>
                                 <tr class="<?= 'non_lu' == $message['statut'] ? 'unread' : 'read'; ?>">
+                                    <td><?= htmlspecialchars($message['author']) . " (Vous)" ?></td>
                                     <td><?= htmlspecialchars($message['destinataire']) ?></td>
-                                    <td><?= htmlspecialchars($message['statut']) ?></td>
+                                   
                                     <td class="action-buttons">
                                         <a href="/messagerie/view?id=<?= $message['id'] ?>" class="action-button_view">Voir</a>
                                         <a href="/messagerie/delete?id=<?= $message['id'] ?>" class="action-button_delete">Supprimer</a>
@@ -65,7 +66,7 @@
                                     <td><?= htmlspecialchars($message['statut']) ?></td>
                                     <td class="action-buttons">
                                         <a href="/messagerie/view?id=<?= $message['id'] ?>" class="action-button_view">Voir</a>
-                                        <a href="/messagerie/reply?id=<?= $message['id'] ?>" class="action-button_delete">Répondre</a>
+                                      
                                     </td>
                                 </tr>
                             <?php endforeach; ?>

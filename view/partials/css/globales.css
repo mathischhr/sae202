@@ -99,6 +99,32 @@ li {
     margin: auto;
 }
 
+.flash-messages .error-message {
+    background-color: white;
+    color: var(--primary-color);
+    padding: 10px;
+    border-radius: var(--border-radius);
+    border: 2px solid var(--primary-color);
+    margin-bottom: 20px;
+    max-width: 500px;
+    text-align: center;
+    width: 80%;
+    margin: auto;
+}
+
+.flash-messages .info-message {
+    background-color: white;
+    color: var(--text-color);
+    padding: 10px;
+    border-radius: var(--border-radius);
+    border: 2px solid var(--text-color);
+    margin-bottom: 20px;
+    max-width: 500px;
+    text-align: center;
+    width: 80%;
+    margin: auto;
+}
+
 .container {
     width: 100%;
     max-width: 1200px;

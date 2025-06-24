@@ -12,7 +12,12 @@
 
         <div class="action-buttons">
             <a href="/messagerie" class="action-button_back">Retour à la messagerie</a>
-            <a href="/messagerie/delete?id=<?= $message['id'] ?>" class="action-button_delete">Supprimer</a>
+
+            <?php if ($message['author'] === $_SESSION['user']['username']): ?>
+                <a href="/messagerie/delete?id=<?= $message['id'] ?>" class="action-button_delete">Supprimer</a>
+            <?php endif; ?>
+
+
         </div>
     </div>
 

@@ -9,7 +9,7 @@
             <select id="destinataire" name="destinataire" required>
                 <option value="" disabled selected>Choisissez un destinataire</option>
                 <?php foreach ($adminUsers as $user): ?>
-                    <option value="<?= htmlspecialchars($user['username']) ?>"><?= htmlspecialchars($user['username']) ?></option>
+                    <option value="<?= htmlspecialchars($user['user_id']) ?>"><?= htmlspecialchars($user['username']) ?></option>
                 <?php endforeach; ?>
             </select>
         </div>

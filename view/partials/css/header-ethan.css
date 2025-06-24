@@ -1035,7 +1035,7 @@ th, td {
 /* Bloc de contenu du message */
 .message_content {
   flex-basis: 100%;
-  white-space: pre-wrap;
+  /* white-space: pre-wrap; */
   color: #444;
   max-width: 700px;      /* limite la largeur pour garder une bonne lisibilité */
   margin: 0 auto;        /* ✅ centre horizontalement */
