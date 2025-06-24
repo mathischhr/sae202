@@ -1,7 +1,7 @@
 <div class="comment_add_container">
   <div class="flexing">
       <a href="/avis" class="button_action go_to_link">Retour à mes avis</a>
-      <h1 class="title">écrire un avis</h1>
+      <h1 class="title">ecrire un avis</h1>
   </div>
     <form method="post" action="/avis/add" class="form-container">
         <input type="hidden" name="user_id" value="<?= htmlspecialchars($user['id']) ?>">
