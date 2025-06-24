@@ -118,3 +118,28 @@ function updateAvis(mixed $data): array
         return ['success' => false, 'message' => 'Erreur lors de la mise à jour de l\'avis.'];
     }
 }
+
+function getAllPublishedAvis(): ?array
+{
+    global $dbInstance;
+
+    // Récupérer tous les avis publiés
+    $query = "SELECT * FROM avis WHERE statut = 'publie' ORDER BY date DESC";
+    $stmt = $dbInstance->prepare($query);
+    $stmt->execute();
+
+    if ($stmt->rowCount() > 0) {
+        $avis = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        // Ajouter les noms d'utilisateur pour chaque avis
+        foreach ($avis as &$avi) {
+            $user = getUserById($avi['user_id']);
+            $avi['username'] = $user ? $user['username'] : 'Inconnu';
+            $avi['email'] = $user ? $user['email'] : 'Inconnu';
+            $avi['role'] = $user ? $user['role'] : 'Inconnu';
+        }
+
+        return $avis;
+    }
+
+    return null; // Aucun avis publié trouvé
+}

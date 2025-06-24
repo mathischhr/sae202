@@ -1,0 +1,56 @@
+span.avis-rate {
+  font-size: 1.5em;
+}
+span.avis-rate.star.filled {
+  color: #ffcc00;
+}
+
+
+
+/* Ecrire un avis */
+
+h1.title {
+    font-size: 2.5em;
+    color: #333;
+    margin-bottom: 20px;
+    text-transform: capitalize;
+}
+
+
+.rating-container {
+    text-align: center;
+}
+
+.stars {
+    display: inline-block;
+    font-size: 3em; /* Ajuste la taille des étoiles */
+    cursor: pointer;
+}
+
+.star {
+    color: #e0e0e0; /* Couleur par défaut des étoiles vides */
+    transition: color 0.2s ease-in-out;
+}
+
+.star.filled {
+    color: #ffcc00; /* Couleur des étoiles remplies, similaire à ton image */
+}
+
+/* Style pour l'étoile au survol (bleu, comme sur ton image) */
+.star:hover,
+.star.hovered {
+    color: #ffcc00; /* Jaune pour le survol */
+}
+
+/* Quand une étoile est survolée, les étoiles précédentes doivent être jaunes aussi */
+.star:hover ~ .star {
+    color: #e0e0e0; /* Les étoiles après le survol redeviennent gris */
+}
+
+/* Au survol d'une étoile, les étoiles précédentes deviennent jaunes */
+.star.hovered-prev {
+    color: #ffcc00;
+}
+
+
+

@@ -21,6 +21,8 @@
   <hr class="ligne marron">
 </div>
 
+
+
 <!-- Contenu complémentaire -->
 <div class="contenu">
   <h2 id="trailer">Trailer</h2>
@@ -32,29 +34,25 @@
 </div>
 
 <div class="avis-liste">
-  <div class="avis-box">
-    <p>Jean Dupont</p>
-    <p>Super service, je recommande !</p>
-  </div>
-
-  <div class="avis-box">
-    <p>Claire Martin</p>
-    <p>Très professionnel et rapide.</p>
-  </div>
-
-  <div class="avis-box">
-    <p>Claire Martin</p>
-    <p>Très professionnel et rapide.</p>
-  </div>
-
-  <div class="avis-box">
-    <p>Luc Bernard</p>
-    <p>Service client au top !</p>
-  </div>
+  <?php if ($publishedAvis): ?>
+    <?php foreach ($publishedAvis as $avis): ?>
+      <div class="avis-box">
+        <div class="rating-box">
+          <?php for ($i = 1; $i <= 5; $i++): ?>
+            <span class="avis-rate star <?= $i <= $avis['rate'] ? 'filled' : '' ?>">★</span>
+          <?php endfor; ?>
+        </div>
+        <p><?= htmlspecialchars($avis['username']) ?></p>
+        <p><?= $avis['content'] ?></p>
+      </div>
+    <?php endforeach; ?>
+  <?php else: ?>
+    <p>Aucun avis publié trouvé.</p>
+  <?php endif; ?>
 </div>
 
 <div class="avis-button-container">
-  <button class="avis-button">Laisser un avis</button>
+  <a href="/avis/add" class="avis-button">Laisser un avis</a>
 </div>
 
 <section class="newsletter-section">

@@ -14,8 +14,10 @@ function getMessages()
 
     $messages = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-    $d = [];
-    foreach ($messages as $message) {
+    if (!$messages) {
+        return []; // No messages found
+    }
+    foreach ($messages as &$message) {
         $message['date'] = date('d/m/Y H:i', strtotime($message['date_envoi']));
         $message['contenu'] = htmlspecialchars($message['contenu'], ENT_QUOTES, 'UTF-8');
        
@@ -24,11 +26,9 @@ function getMessages()
             $message['email'] = $user['email'];
             $message['role'] = $user['role'];
             $message['is_replied'] = isMessageReplied($message['id']);
-        $d[] = $message;
     }
 
-  
-    return $d;
+    return $messages;
 }
 
 

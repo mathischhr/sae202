@@ -38,6 +38,7 @@
     </div>
   </div>
 
+  <script src="/view/partials/js/avis.js"></script>
   <script src="/view/partials/js/script.js"></script>
 </div>
 

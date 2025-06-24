@@ -43,6 +43,7 @@ if (!isset($favicon) && isset($GLOBALS['favicon'])) {
     <meta property="og:type" content="website">
 
     <link rel="stylesheet" href="/view/partials/css/header-ethan.css">
+    <link rel="stylesheet" href="/view/partials/css/style-esdras.css">
     <link rel="shortcut icon" href="<?= $favicon; ?>" type="image/x-icon">
 
 
@@ -80,10 +81,7 @@ if (!isset($favicon) && isset($GLOBALS['favicon'])) {
                 </a>
             <?php else: ?>
                 <a href="/profile" class="messages-link">
-                   Mon compte
-                </a>
-                <a href="/messagerie" class="messages-link">
-                    Messagerie
+                    Mon compte
                 </a>
                 <a href="/connexion/logout" class="logout-link">
                     <img src="/images/menu_hamburger.svg" alt="Icône déconnexion" class="icon">
@@ -101,9 +99,13 @@ if (!isset($favicon) && isset($GLOBALS['favicon'])) {
                 <li><a href="/concept">Concept</a></li>
                 <li><a href="/infos-pratiques">Infos pratiques</a></li>
                 <li><a href="/agence" target="_blank" rel="noopener">Ollie Agence</a></li>
-     <?php if (isset($_SESSION['user'])): ?>
+                <?php if (isset($_SESSION['user'])): ?>
+                    <li>
+                        <a href="/messagerie" class="messages-link">
+                            Messagerie
+                        </a>
+                    </li>
                     <li class="mobile-only"><a href="/profile">Mon compte</a></li>
-                    <li class="mobile-only"><a href="/messagerie">Messagerie</a></li>
                     <li class="mobile-only"><a href="/connexion/logout">Déconnexion</a></li>
                 <?php else: ?>
                     <li class="mobile-only"><a href="/connexion">Connexion</a></li>
