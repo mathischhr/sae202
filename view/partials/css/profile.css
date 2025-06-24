@@ -1,0 +1,107 @@
+.profile-infos {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 50px;
+    padding: 20px;
+    justify-content: center;
+    align-items: center;
+}
+.profile-infos .left-content,
+.profile-infos .right-content {
+    flex: 1;
+    min-width: 300px;
+    max-width: 500px;
+    width: 100%;
+}
+
+.profile-infos .left-content {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    gap: 30px;
+}
+
+.profile-infos .left-content .header-left {
+    background-color: var(--primary-bg-color);
+    padding: 20px;
+    border-radius: var(--border-radius-large);
+    width: 100% !important;
+}
+
+.profile-card {
+    /* background-color: white; */
+    /* padding: 20px; */
+    border-radius: var(--border-radius-large);
+    box-shadow: var(--box-shadow);
+}
+
+div.profile_container .profile-infos .profile-card {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    /* max-width: 500px; */
+    gap: 10px;
+    padding: 10px;
+    /* background-color: #fff; */
+    border-radius: var(--border-radius);
+    box-shadow: var(--super-shadow);
+}
+
+div.profile_container .profile-infos .profile-card img{
+    width: 100%;
+    height: 200px;
+    background-color:  white;
+    padding-top: 8px;
+    border-radius: var(--border-radius);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+div.profile_container .profile-infos .profile-card .card-content {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+div.profile_container .profile-infos .profile-card .card-content p {
+    display: flex;
+    justify-content: space-between !important;
+    margin: 0 !important;
+    text-align: left !important;
+    gap: 15px;
+}
+
+div.profile_container .profile-infos .form-container {
+    margin: 0 auto !important;
+    background-color: var(--primary-bg-color);
+}
+
+div.profile_container .profile-infos .form-container .form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    width: 100%;
+}
+
+.card-title {
+    font-size: 1.5rem;
+    font-weight: bold;
+    height: 15px !important;
+    color: var(--secondary-color);
+}
+
+.profile-links {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.profile-links a {
+    text-decoration: none;
+    background-color: var(--secondary-color);
+    color: white;
+    font-weight: bold;
+    margin: 0 !important;
+    width: 100%;
+    text-align: center;
+}

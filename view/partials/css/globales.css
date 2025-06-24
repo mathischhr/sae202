@@ -45,7 +45,7 @@ a {
 }
 
 :root {
-    --primary-color: #FF9F00;
+    --primary-color: #F4631E;
     --secondary-color: #309898;
     --background-color: #f0f0f0;
     --text-color: #333;
@@ -53,6 +53,7 @@ a {
     --box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
     --font-family: 'Mainstay', Arial, sans-serif;
     --border-radius-large: 20px;
+    --primary-bg-color: rgba(244, 99, 30, 0.33);
 }
 
 a.go_to_link {
@@ -61,7 +62,7 @@ a.go_to_link {
     text-decoration: none;
     font-size: 1.4rem;
     display: inline-block;
-    margin: 20px;
+    margin: 0 20px;
     padding: 10px 20px;
     border: 2px solid var(--secondary-color);
     border-radius: var(--border-radius);

@@ -45,6 +45,7 @@ if (!isset($favicon) && isset($GLOBALS['favicon'])) {
     <link rel="stylesheet" href="/view/partials/css/globales.css">
     <link rel="stylesheet" href="/view/partials/css/header-ethan.css">
     <link rel="stylesheet" href="/view/partials/css/style-esdras.css">
+    <link rel="stylesheet" href="/view/partials/css/profile.css">
     <link rel="shortcut icon" href="<?= $favicon; ?>" type="image/x-icon">
 
 
