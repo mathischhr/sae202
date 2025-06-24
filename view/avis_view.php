@@ -2,7 +2,6 @@
     <div class="new_avis">
         <a href="/avis/add" class="new_avis_btn">Donner mon avis </a>
     </div>
-
     <h1>Mes avis</h1>
     <?php if (!empty($mesAvis)): ?>
         <div class="avis-liste">
@@ -24,6 +23,7 @@
             <a href="/avis/add" class="button_action go_to_link">Donner mon avis</a>
         </div>
     <?php endif; ?>
+</div>
     <div class="autres_avis">
         <h2>Les avis publiés par d'autres participants </h2>
         <?php if ($allPublishedAvis): ?>
