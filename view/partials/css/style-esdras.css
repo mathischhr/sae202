@@ -144,3 +144,28 @@ a.new_avis_btn {
     }
     
 }
+
+
+.button_compose_message {
+    background-color: var(--secondary-color);
+    color: white;
+    padding: 10px 20px;
+    border-radius: var(--border-radius);
+    text-decoration: none;
+    transition: background-color 0.3s ease;
+}
+
+.button_compose_message:hover {
+    background-color: darken(var(--secondary-color), 10%);
+    transform: scale(1.05);
+    box-shadow: var(--box-shadow);
+    color: var(--primary-color);
+}
+
+.messagerie_form_container {
+    max-width: 700px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: white;
+    width: 100%;
+}

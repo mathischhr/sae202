@@ -68,20 +68,40 @@ a.go_to_link {
     border-radius: var(--border-radius);
 }
 
-ul{
+ul {
     padding: 0;
     margin: 0;
 }
 
-li{
+li {
     list-style: none;
 }
 
-.flexing{
+.flexing {
     display: flex;
-    flex-direction: column;
     flex-wrap: wrap;
     justify-content: center;
     align-items: center;
     gap: 20px;
+}
+
+.flash-messages .success-message {
+
+    background-color: white;
+    color: var(--secondary-color);
+    padding: 10px;
+    border-radius: var(--border-radius);
+    border: 2px solid var(--secondary-color);
+    margin-bottom: 20px;
+    max-width: 500px;
+    text-align: center;
+    width: 80%;
+    margin: auto;
+}
+
+.container {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
 }

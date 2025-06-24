@@ -19,9 +19,10 @@ function index(): void
     $messages = getUserSentMessages($_SESSION['user']['id']);
     $receivedMessages = getUserReceivedMessages($_SESSION['user']['id']);
 
-    $adminUsers = getAdminUsers(); 
+    $adminUsers = getAdminUsers();
 
-    //var_dump($adminUsers);
+    // var_dump( $_SESSION['user'],  $receivedMessages);
+    // die();
 
     require_once $GLOBALS['partials_dir'] . 'header.php';
     require_once $GLOBALS['view_dir'] . 'messagerie_view.php';
@@ -29,7 +30,8 @@ function index(): void
 }
 
 
-function send(){
+function send()
+{
     // Vérifier si l'utilisateur est connecté
     if (!isset($_SESSION['user'])) {
         $_SESSION['errorMessage'] = 'Vous devez être connecté pour envoyer un message.';
@@ -53,8 +55,8 @@ function send(){
         // Enregistrer le message dans la base de données
         $result = createMessage($userId, $destinataire, $contenu, $_SESSION['user']['role'] === 'admin');
 
-      if($result['success']){
-            $_SESSION['successMessage'] =$result['message'];
+        if ($result['success']) {
+            $_SESSION['successMessage'] = $result['message'];
         } else {
             $_SESSION['errorMessage'] = $result['message'];
         }
@@ -62,10 +64,19 @@ function send(){
         header('Location: /messagerie');
         exit;
     }
+
+    // Si le formulaire n'a pas été soumis, afficher le formulaire d'envoi de message
+    $title = "Envoyer un message";
+    $desc = "Envoyez un message à un utilisateur.";
+    $adminUsers = getAdminUsers();
+    require_once $GLOBALS['partials_dir'] . 'header.php';
+    require_once $GLOBALS['view_dir'] . 'send_message_view.php';
+    require_once $GLOBALS['partials_dir'] . 'footer.php';
 }
 
 
-function view(): void {
+function view(): void
+{
     // Vérifier si l'utilisateur est connecté
     if (!isset($_SESSION['user'])) {
         $_SESSION['errorMessage'] = 'Vous devez être connecté pour voir les messages.';
@@ -99,7 +110,8 @@ function view(): void {
     require_once $GLOBALS['partials_dir'] . 'footer.php';
 }
 
-function delete(): void {
+function delete(): void
+{
     // Vérifier si l'utilisateur est connecté
     if (!isset($_SESSION['user'])) {
         $_SESSION['errorMessage'] = 'Vous devez être connecté pour supprimer un message.';

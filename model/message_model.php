@@ -41,9 +41,37 @@ function getUserReceivedMessages(int $userId): array
     $stmt->bindParam(':user_id', $userId);
     $stmt->execute();
 
-    return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    $messages = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+    foreach ($messages as &$message) {
+        // Récupérer le nom de l'expéditeur
+        $expediteurInfos = getMessageExpediteurInfos($message['user_id']);
+        if ($expediteurInfos) {
+            $message['username'] = $expediteurInfos['username'];
+        } else {
+            $message['username'] = 'Inconnu';
+        }
+    }
+
+    return $messages;
 }
 
+function getMessageExpediteurInfos(int $userId): ?array
+{
+    global $dbInstance;
+
+    // Récupérer les informations de l'expéditeur du message
+    $query = "SELECT id, username FROM users WHERE id = :user_id";
+    $stmt = $dbInstance->prepare($query);
+    $stmt->bindParam(':user_id', $userId);
+    $stmt->execute();
+
+    if ($stmt->rowCount() > 0) {
+        return $stmt->fetch(PDO::FETCH_ASSOC);
+    }
+
+    return null; // Aucun expéditeur trouvé pour cet ID
+}
 
 function getMessageDestinataireInfos(int $messageId): ?array
 {

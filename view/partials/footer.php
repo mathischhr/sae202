@@ -1,3 +1,4 @@
+</main>
 <div class="footer-container">
   <div class="footer-divider">
     <svg viewBox="0 0 1440 373" fill="none" xmlns="http://www.w3.org/2000/svg">
