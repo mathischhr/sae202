@@ -30,7 +30,7 @@
 
   <div class="avis-header">
   <h2 id="avis">Vos avis</h2>
-  <a href="#tous-les-avis" class="btn-voir-plus">Voir plus d’avis</a>
+  <a href="/avis" class="btn-voir-plus">Voir plus d’avis</a>
 </div>
 
 <div class="avis-liste">

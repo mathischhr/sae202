@@ -4,7 +4,7 @@ require_once $GLOBALS['conf_dir'] . "conf.inc.php";
 require_once $GLOBALS['model_dir'] . "user_model.php";
 
 
-function getUserComments(int $userId): ?array
+function getUserAvis(int $userId): ?array
 {
     global $dbInstance;
 
@@ -13,21 +13,30 @@ function getUserComments(int $userId): ?array
         return null; // L'utilisateur n'existe pas
     }
 
-    // Récupérer les commentaires de l'utilisateur
+    // Récupérer les avis de l'utilisateur
     $query = "SELECT * FROM avis WHERE user_id = :user_id ORDER BY date DESC";
     $stmt = $dbInstance->prepare($query);
     $stmt->bindParam(':user_id', $userId);
     $stmt->execute();
 
     if ($stmt->rowCount() > 0) {
-        return $stmt->fetchAll(PDO::FETCH_ASSOC);
-    }
+        $avis = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        // Ajouter les noms d'utilisateur pour chaque avis
+        foreach ($avis as &$avi) {
+            $user = getUserById($avi['user_id']);
+            $avi['username'] = $user ? $user['username'] : 'Inconnu';
+            $avi['email'] = $user ? $user['email'] : 'Inconnu';
+            $avi['role'] = $user ? $user['role'] : 'Inconnu';
+        }
 
-    return null; // Aucun commentaire trouvé pour cet utilisateur
-  
+        return $avis;
+    } 
+    // Aucun avis trouvé pour cet utilisateur
+    return null;
+
 }
 
-function createAvi( mixed $data): array
+function createAvis(mixed $data): array
 {
     global $dbInstance;
 
@@ -119,13 +128,19 @@ function updateAvis(mixed $data): array
     }
 }
 
-function getAllPublishedAvis(): ?array
+function getAllPublishedAvis(?int $limit = 5): ?array
 {
     global $dbInstance;
 
     // Récupérer tous les avis publiés
     $query = "SELECT * FROM avis WHERE statut = 'publie' ORDER BY date DESC";
+    if ($limit) {
+        $query .= " LIMIT :limit";
+    }
     $stmt = $dbInstance->prepare($query);
+    if ($limit) {
+        $stmt->bindParam(':limit', $limit, PDO::PARAM_INT);
+    }
     $stmt->execute();
 
     if ($stmt->rowCount() > 0) {

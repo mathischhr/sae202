@@ -42,6 +42,7 @@ if (!isset($favicon) && isset($GLOBALS['favicon'])) {
     <meta property="og:url" content="<?= $canonicalUrl; ?>">
     <meta property="og:type" content="website">
 
+    <link rel="stylesheet" href="/view/partials/css/globales.css">
     <link rel="stylesheet" href="/view/partials/css/header-ethan.css">
     <link rel="stylesheet" href="/view/partials/css/style-esdras.css">
     <link rel="shortcut icon" href="<?= $favicon; ?>" type="image/x-icon">

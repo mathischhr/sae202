@@ -22,9 +22,21 @@ function index(): void
     }
     $user = $_SESSION['user'];
 
-    $myComments = getUserComments($user['id']);
+    $mesAvis = getUserAvis($user['id']);
+    if (!$mesAvis) {
+        $_SESSION['errorMessage'] = 'Aucun avis trouvé pour cet utilisateur.';
+        header('Location: /avis/add');
+        exit;
+    }
+    $avisPublished = getAllPublishedAvis();
 
-    //var_dump($myComments);
+    $allPublishedAvis =  array_filter($avisPublished, function ($avis) {
+        return $avis['username'] !== $_SESSION['user']['username'];
+    });
+   
+
+    // var_dump($allPublishedAvis);
+    // die();
 
 
     require_once $GLOBALS['partials_dir'] . 'header.php';
@@ -66,8 +78,8 @@ function add(): void
 
         $data['user_id'] = (int) $data['user_id'] ;
 
-        // Créer le commentaire
-        $result = createAvi($data);
+        // Créer l'avis
+        $result = createAvis($data);
 
         if ($result['success']) {
             $_SESSION['successMessage'] = $result['message'];

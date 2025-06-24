@@ -1,32 +1,3 @@
-/* ====================================
-   FONTS
-==================================== */
-@font-face {
-  font-family: 'Mainstay';
-  src: url('Mainstay.woff2') format('woff2'),
-       url('Mainstay.woff') format('woff');
-  font-weight: normal;
-  font-style: normal;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: 'libel_suit';
-  src: url('LibelSuit-Regular.woff2') format('woff2'),
-       url('LibelSuit-Regular.woff') format('woff');
-  font-weight: normal;
-  font-style: normal;
-  font-display: swap;
-}
-
-/* ====================================
-   BASE STYLES (Mobile first)
-==================================== */
-body {
-  margin: 0;
-  font-family: 'libel_suit', Arial, sans-serif;
-  color: #000;
-}
 
 p {
   margin: 25px;
@@ -350,7 +321,8 @@ input::placeholder {
 }
 /* Conteneur principal */
 .form-container {
-  max-width: 300px;
+  max-width: 400px;
+  width: 100%;
   margin: 50px auto;
   padding: 30px 25px;
   background-color: rgba(82, 28, 13, 0.8); 

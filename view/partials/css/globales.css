@@ -1,0 +1,76 @@
+/* ====================================
+   FONTS
+==================================== */
+@font-face {
+    font-family: 'Mainstay';
+    src: url('Mainstay.woff2') format('woff2'),
+        url('Mainstay.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'libel_suit';
+    src: url('LibelSuit-Regular.woff2') format('woff2'),
+        url('LibelSuit-Regular.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
+
+/* ====================================
+   BASE STYLES (Mobile first)
+==================================== */
+body {
+    margin: 0;
+    font-family: 'libel_suit', Arial, sans-serif;
+    color: #000;
+    box-sizing: border-box !important;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+*,
+*::before,
+*::after {
+    box-sizing: border-box !important;
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+:root {
+    --primary-color: #FF9F00;
+    --secondary-color: #309898;
+    --background-color: #f0f0f0;
+    --text-color: #333;
+    --border-radius: 15px;
+    --box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    --font-family: 'Mainstay', Arial, sans-serif;
+    --border-radius-large: 20px;
+}
+
+a.go_to_link {
+    color: var(--secondary-color);
+    font-weight: bold;
+    text-decoration: none;
+    font-size: 1.4rem;
+    display: inline-block;
+    margin: 20px;
+    padding: 10px 20px;
+    border: 2px solid var(--secondary-color);
+    border-radius: var(--border-radius);
+}
+
+.flexing{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+}
