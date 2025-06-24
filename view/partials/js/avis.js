@@ -1,4 +1,13 @@
 document.addEventListener('DOMContentLoaded', () => {
+
+
+    // vérifie si on est sur la page /avis/add 
+
+    if (window.location.pathname !== '/avis/add') {
+        return; // Ne pas exécuter le script si on n'est pas sur la page
+    }
+
+
     const starsContainer = document.querySelector('.stars');
     const stars = document.querySelectorAll('.star');
 
