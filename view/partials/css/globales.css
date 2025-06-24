@@ -69,6 +69,7 @@ a.go_to_link {
 
 .flexing{
     display: flex;
+    flex-direction: column;
     flex-wrap: wrap;
     justify-content: center;
     align-items: center;

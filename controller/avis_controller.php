@@ -23,11 +23,7 @@ function index(): void
     $user = $_SESSION['user'];
 
     $mesAvis = getUserAvis($user['id']);
-    if (!$mesAvis) {
-        $_SESSION['errorMessage'] = 'Aucun avis trouvé pour cet utilisateur.';
-        header('Location: /avis/add');
-        exit;
-    }
+   
     $avisPublished = getAllPublishedAvis();
 
     $allPublishedAvis =  array_filter($avisPublished, function ($avis) {
