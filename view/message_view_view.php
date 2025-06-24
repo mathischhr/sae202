@@ -1,11 +1,10 @@
 <div class="messagerie_container">
-    <h1>Message #ID<?= $message['id'] ?> </h1>
+<h1 id="concept">Message</h1>
   
     <div class="view_message_container">
         <div class="message_details">
             <p><strong>Destinataire:</strong> <?= htmlspecialchars($message['destinataire']) ?></p>
             <p><strong>Date d'envoi:</strong> <?= htmlspecialchars($message['date_envoi']) ?></p>
-            <p><strong>Contenu:</strong></p>
             <div class="message_content">
                 <?= nl2br($message['contenu']) ?>
             </div>
