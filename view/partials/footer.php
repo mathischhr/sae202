@@ -19,16 +19,16 @@
       <h5>Suivez-nous !</h5>
       <div class="social-links">
         <a href="https://www.facebook.com" target="_blank" aria-label="Facebook">
-          <img src="images/facebook.svg" alt="Facebook">
+          <img src="/images/facebook.svg" alt="Facebook">
         </a>
         <a href="https://www.instagram.com" target="_blank" aria-label="Instagram">
-          <img src="images/insta.svg" alt="Instagram">
+          <img src="/images/insta.svg" alt="Instagram">
         </a>
         <a href="https://www.twitter.com" target="_blank" aria-label="Twitter">
-          <img src="images/twitter.svg" alt="Twitter">
+          <img src="/images/twitter.svg" alt="Twitter">
         </a>
         <a href="https://www.tiktok.com" target="_blank" aria-label="TikTok">
-          <img src="images/tiktok.svg" alt="TikTok">
+          <img src="/images/tiktok.svg" alt="TikTok">
         </a>
       </div>
 
