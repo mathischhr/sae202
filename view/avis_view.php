@@ -18,10 +18,10 @@
                         <p><?= $avis['content'] ?></p>
                     </div>
                 <?php endforeach; ?>
-            <?php else: ?>
-                <p>Vous n'avez pas encore laissé d'avis.</p>
-                <a href="/avis/add" class="button_action go_to_link">Donner mon avis</a>
             <?php endif; ?>
+        <?php else: ?>
+            <p>Vous n'avez pas encore laissé d'avis.</p>
+            <a href="/avis/add" class="button_action go_to_link">Donner mon avis</a>
         </div>
     <?php endif; ?>
     <div class="autres_avis">
