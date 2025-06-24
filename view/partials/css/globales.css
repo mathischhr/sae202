@@ -67,6 +67,15 @@ a.go_to_link {
     border-radius: var(--border-radius);
 }
 
+ul{
+    padding: 0;
+    margin: 0;
+}
+
+li{
+    list-style: none;
+}
+
 .flexing{
     display: flex;
     flex-direction: column;
